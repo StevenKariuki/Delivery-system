@@ -1,0 +1,135 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  h1, h2 {
+    color: #ff4757;
+  }
+  
+  p {
+    color: #555;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff4757;
+    padding: 15px 20px;
+    color: #fff;
+  }
+  
+  header .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  header ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  
+  header ul li {
+    display: inline-block;
+  }
+  
+  header ul li a, header .cta {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+  }
+  
+  header ul li a:hover, header .cta:hover {
+    background-color: #e84141;
+  }
+  
+  /* Menu Section */
+  .menu {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .menu p {
+    margin-bottom: 30px;
+  }
+  
+  /* Grid layout for the menu items */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .menu-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .menu-item img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .menu-item h2 {
+    margin-bottom: 10px;
+  }
+  
+  .menu-item p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .menu-item .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff4757;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .menu-item button {
+    background-color: #ff4757;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .menu-item button:hover {
+    background-color: #e84141;
+  }
+  
+  .menu-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Footer Styles */
+  footer {
+    text-align: center;
+    padding: 15px 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+  }
