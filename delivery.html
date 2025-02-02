@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Personnel Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0066cc;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+main {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+tbody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 4px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.pickup {
+    background-color: #ffa500;
+}
+
+button.deliver {
+    background-color: #28a745;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Delivery Orders</h1>
+    </header>
+
+    <main>
+        <!-- Orders Table -->
+        <section>
+            <h2>Available Delivery Orders</h2>
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically populated -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Delivery Management System</p>
+    </footer>
+
+    <script src="">
+        // Example list of orders (should be fetched from a server in real-world applications)
+const orders = [
+    { id: 1, customer: "John Doe", address: "123 Apple Street", status: "Pending" },
+    { id: 2, customer: "Jane Smith", address: "456 Pear Avenue", status: "Pending" },
+    { id: 3, customer: "Mark Johnson", address: "789 Orange Lane", status: "Picked Up" },
+];
+
+// Function to render orders in the table
+function loadOrders() {
+    const tableBody = document.querySelector("#orderTable tbody");
+    tableBody.innerHTML = ""; // Clear existing rows
+
+    orders.forEach(order => {
+        const row = document.createElement("tr");
+
+        // Add table cells
+        row.innerHTML = `
+            <td>${order.id}</td>
+            <td>${order.customer}</td>
+            <td>${order.address}</td>
+            <td>${order.status}</td>
+            <td>
+                <button class="pickup" onclick="markAsPickedUp(${order.id})" ${order.status !== "Pending" ? "disabled" : ""}>Pick Up</button>
+                <button class="deliver" onclick="markAsDelivered(${order.id})" ${order.status !== "Picked Up" ? "disabled" : ""}>Deliver</button>
+            </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to mark order as "Picked Up"
+function markAsPickedUp(orderId) {
+    const order = orders.find(o => o.id === orderId);
+    if (order && order.status === "Pending") {
+        order.status = "Picked Up";
+    }
+    loadOrders();
+}
+
+// Function to mark order as "Delivered"
+function markAsDelivered(orderId) {
+    const order = orders.find(o => o.id === orderId);
+    if (order && order.status === "Picked Up") {
+        order.status = "Delivered";
+    }
+    loadOrders();
+}
+
+// Load orders on page load
+window.onload = loadOrders;
+    </script>
+</body>
+</html>

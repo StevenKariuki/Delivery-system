@@ -1,42 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Delivery - Track Order</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order | Food Delivery</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ff4757;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        header ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        header ul li a:hover {
+            background-color: #e84141;
+        }
+
+        /* Tracking Page Styles */
+        .tracking-page {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .tracking-page h1 {
+            text-align: center;
+            color: #ff4757;
+        }
+
+        .tracking-page p {
+            text-align: center;
+            color: #555;
+        }
+
+        #tracking-form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        #tracking-form label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        #tracking-form input {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        #tracking-form .btn {
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #tracking-form .btn:hover {
+            background-color: #e84141;
+        }
+
+        #tracking-status {
+            margin-top: 30px;
+            background-color: #f7f7f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #tracking-status h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #tracking-status p {
+            color: #555;
+            font-size: 18px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="logo">FoodDelivery</div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="menu.html">Menu</a></li>
-        <li><a href="cart.html">Cart</a></li>
-        <li><a href="tracking.html">Track Order</a></li>
-      </ul>
-    </nav>
-    <a class="cta" href="cart.html">Cart (0)</a>
-  </header>
+    <!-- Header -->
+    <header>
+        <div class="logo">FoodDelivery</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="track.html">Track Order</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Tracking Section -->
-  <section class="tracking">
-    <h1>Track Your Order</h1>
-    <p>Enter your order ID below:</p>
-    <input type="text" id="order-id" placeholder="Order ID">
-    <button id="track-btn">Track Order</button>
-    <div class="tracking-status" id="tracking-status">
-      <!-- Status updates will go here -->
-    </div>
-  </section>
+    <!-- Order Tracking Section -->
+    <section class="tracking-page">
+        <h1>Track Your Order</h1>
+        <p>Enter your order ID below to get the current status.</p>
+        
+        <!-- Form to search for an order -->
+        <form id="tracking-form">
+            <label for="order-id">Order ID</label>
+            <input type="text" id="order-id" placeholder="e.g., 123456" required>
+            <button type="button" id="track-button" class="btn">Track Order</button>
+        </form>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2023 FoodDelivery. All rights reserved.</p>
-  </footer>
+        <!-- Tracking Status -->
+        <div id="tracking-status">
+            <h2>Order Status</h2>
+            <p id="status-message">Please enter your Order ID to track your order.</p>
+        </div>
+    </section>
 
-  <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 FoodDelivery. Serving deliciousness at your doorstep!</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trackButton = document.getElementById('track-button');
+            const statusMessage = document.getElementById('status-message');
+
+            // Dummy status data for demonstration
+            const orderStatuses = {
+                123456: "Preparing",
+                654321: "Out for Delivery",
+                111222: "Delivered",
+                789101: "Preparing",
+            };
+
+            trackButton.addEventListener('click', () => {
+                const orderId = document.getElementById('order-id').value.trim();
+
+                if (!orderId) {
+                    statusMessage.innerText = "Please enter a valid Order ID.";
+                    return;
+                }
+
+                // Simulate fetching order status
+                const status = orderStatuses[orderId];
+
+                if (status) {
+                    statusMessage.innerText = `Your order is currently: ${status}`;
+                } else {
+                    statusMessage.innerText = "Order not found. Please check your Order ID.";
+                }
+            });
+        });
+    </script>
 </body>
 </html>
