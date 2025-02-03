@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery - Sign Up</title>
+  <link rel="stylesheet" href="styleslogin.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @keyframes logoAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes buttonAnimation {
+      0% { background-color: #ff6f61; }
+      50% { background-color: #ff3b2f; }
+      100% { background-color: #ff6f61; }
+    }
+
+    .logo {
+      animation: logoAnimation 2s infinite;
+    }
+
+    .btn {
+      animation: buttonAnimation 3s infinite;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Vi_brant's FoodDelivery</div>
+        <nav>
+          <ul>
+            <!-- <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="tracking.html">Track Order</a></li> -->
+          </ul>
+        </nav>
+        <!-- <a class="cta" href="cart.html">Cart (0)</a> -->
+    </header>
+
+  <section class="auth-container">
+    <div class="auth-box">
+      <h1>Sign Up</h1>
+      <form id="signupForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter your password" required>
+
+        <button type="submit" class="btn">Sign Up</button>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+      </form>
+    </div>
+  </section>
+
+  <script>
+  document.getElementById("signupForm").addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent the form from reloading the page
+
+    // Get form values
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
+
+    // Simple password match validation
+    if (password !== confirmPassword) {
+      alert("Passwords do not match. Vi_brant says please try again.");
+      return;
+    }
+
+    try {
+      // Send POST request to the backend to create the user
+      const response = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Sign up successful! You can now log in.");
+        window.location.href = "login.html"; // Redirect to login page
+      } else {
+        alert(data.message || "Sign up failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+  </script>
+
+</body>
+</html>

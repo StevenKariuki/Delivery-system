@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Delivery - Cart</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    .cart-nav{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        border: 1px solid;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">FoodDelivery</div>
+    <nav>
+      <ul>
+        <li><a href="index-user.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li class="cart-nav"><a href="cart.html">Cart</a></li>
+        <li><a href="tracking.html">Track Order</a></li>
+        <li><a href="checkout.html">Check out</a></li>
+      </ul>
+    </nav>
+    <a class="cta" href="cart.html">Cart (0)</a>
+  </header>
+
+  <!-- Cart Section -->
+  <section class="cart">
+    <h1>Your Cart</h1>
+    <div class="whole-cart">
+        <div class="cart-items">
+            <p>Your cart is empty!</p>
+          </div>
+          <div class="cart-summary">
+            <h3>Total: $0.00</h3>
+            <button class="checkout-btn" disabled>Proceed to payment</button>
+          </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2024 Vi_brant's FoodDelivery.
+        <br> All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

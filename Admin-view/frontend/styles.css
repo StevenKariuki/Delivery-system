@@ -1,0 +1,93 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    background: #f7f8fa;
+    color: #333;
+}
+
+header.admin-header {
+    background: #ff4757;
+    color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header.admin-header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header.admin-header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header.admin-header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+header.admin-header nav ul li a:hover {
+    color: #ddd;
+}
+
+.section {
+    margin: 30px auto;
+    padding: 25px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 800px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    color: #444;
+    font-size: 1.8rem;
+}
+
+#add-item-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-item-form input,
+#add-item-form select {
+    margin-bottom: 15px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#add-item-form input:focus,
+#add-item-form select:focus {
+    border-color: #888;
+}
+
+#add-item-form button {
+    padding: 12px 20px;
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+#add-item-form button:hover {
+    background: #555;
+}
