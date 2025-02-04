@@ -13,7 +13,7 @@ app.use(express.json()); // Allow JSON requests
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",  // Default XAMPP password is empty
+    password: "",  // Default MySQL password is empty
     database: "food_delivery_system"
 });
 
