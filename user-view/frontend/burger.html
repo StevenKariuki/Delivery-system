@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | Burgers</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="stylemenu.css">
+</head>
+<style>
+      @keyframes logoAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2.8); }
+      100% { transform: scale(1); }
+    }
+
+    .logo {
+      animation: logoAnimation 2s infinite;
+    }
+    .menu-nav{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        border: 1px solid;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">Burger Palace</div>
+    <nav>
+      <ul>
+        <li><a href="index-user.html">Home</a></li>
+        <li class="menu-nav"><a href="menu.html">Menu</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="tracking.html">Track Order</a></li>
+        <li><a href="checkout.html">Check out</a></li>
+      </ul>
+    </nav>
+    <a class="cta" href="cart.html">Cart (0)</a>
+  </header>
+
+  <!-- Menu Section -->
+  <section class="menu">
+    <h1>Our Burger Menu</h1>
+    <p>For the hearty appetites – juicy, flavorful burgers that hit the spot every time!</p>
+    <div class="menu-grid">
+      <!-- Menu Item 1 -->
+      <div class="menu-item">
+        <img src="images/burger_1.png" alt="Classic Cheeseburger">
+        <h2>Classic Cheeseburger</h2>
+        <p>A mouthwatering cheeseburger with a juicy beef patty, melted cheese, lettuce, tomato, and pickles.</p>
+        <span class="price">$9.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 2 -->
+      <div class="menu-item">
+        <img src="images/burger_2.png" alt="Bacon Burger">
+        <h2>Bacon Burger</h2>
+        <p>A delicious beef patty topped with crispy bacon, melted cheese, lettuce, tomato, and special sauce.</p>
+        <span class="price">$11.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 3 -->
+      <div class="menu-item">
+        <img src="images/burger_3.png" alt="Veggie Burger">
+        <h2>Veggie Burger</h2>
+        <p>A tasty veggie patty with fresh vegetables, avocado, and creamy sauce, all nestled in a soft bun.</p>
+        <span class="price">$8.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 4 -->
+      <div class="menu-item">
+        <img src="images/burger_4.png" alt="BBQ Burger">
+        <h2>BBQ Burger</h2>
+        <p>A smoky BBQ burger with tender beef, caramelized onions, cheddar cheese, and tangy BBQ sauce.</p>
+        <span class="price">$10.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+      <!-- Menu Item 5 -->
+      <div class="menu-item">
+        <img src="images/burger_5.png" alt="Spicy Jalapeño Burger">
+        <h2>Spicy Jalapeño Burger</h2>
+        <p>A fiery burger with spicy jalapeños, pepper jack cheese, and a kick of hot sauce for the bold-hearted.</p>
+        <span class="price">$9.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 6 -->
+      <div class="menu-item">
+        <img src="images/burger_6.png" alt="Mushroom Swiss Burger">
+        <h2>Mushroom Swiss Burger</h2>
+        <p>A rich and savory burger with sautéed mushrooms, Swiss cheese, and creamy mayo.</p>
+        <span class="price">$12.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 7 -->
+      <div class="menu-item">
+        <img src="images/burger_7.png" alt="Double Cheeseburger">
+        <h2>Double Cheeseburger</h2>
+        <p>Double the beef, double the cheese – a burger lover's dream come true!</p>
+        <span class="price">$13.99</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+
+      <!-- Menu Item 8 -->
+      <div class="menu-item">
+        <img src="images/burger_8.png" alt="Chicken Burger">
+        <h2>Chicken Burger</h2>
+        <p>A crispy chicken patty with fresh lettuce, tomato, and mayo on a soft bun.</p>
+        <span class="price">$8.49</span>
+        <button class="btn">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2023 BurgerPalace. All rights reserved. Powered by Steven's Deliciousness!</p>
+  </footer>
+</body>
+</html>

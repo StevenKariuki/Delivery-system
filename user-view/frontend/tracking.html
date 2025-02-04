@@ -18,7 +18,6 @@
 
         header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
             background-color: #ff4757;
             padding: 15px 20px;
@@ -45,6 +44,11 @@
 
         header ul li a:hover {
             background-color: #e84141;
+        }
+        header nav{
+            display: flex;
+            justify-content: flex-end;
+            margin-left: 20px;
         }
 
         /* Tracking Page Styles */
@@ -207,3 +211,16 @@
     </script>
 </body>
 </html>
+<header>
+    <div class="logo">FoodDelivery</div>
+    <nav>
+        <ul>
+            <li><a href="index-user.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="tracking.html">Track Order</a></li>
+            <li><a href="checkout.html">Check out</a></li>
+        </ul>
+    </nav>
+    <a class="cta" href="cart.html">Cart (0)</a>
+</header>

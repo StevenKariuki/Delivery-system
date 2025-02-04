@@ -48,31 +48,31 @@
                 <li><a href="checkout.html">Check out</a></li>
             </ul>
         </nav>
-        <a class="cta" href="cart.html">Cart (0)</a>
+        <a class="cta" href="cart.html">View Cart</a>    
 
         
     </header>   
     <div class="account">
-        <h3 class="Welcome">Welcome Vi_brant</h3>
+        <h3 class="Welcome" id="welcomeMessage">Welcome, Guest!</h3>
         <button onclick="logout()"><a href="javascript:void(0)">Log out</a></button>
     </div>
-
     <!-- Restaurants Section -->
     <section class="restaurants">
         <h1>Explore our Restaurants</h1>
+        
         <marquee behavior="" direction="right"><i>Get the best meals you've ever seen.</i></marquee>
         <div class="restaurant-list">
             <div class="restaurant-card">
                 <img src="images/pizza.png" alt="Pizza Mania">
                 <h3>Pizza Mania</h3>
                 <p>Delicious pizzas, made fresh.</p>
-                <a href="viewmenu.html" class="btn">View Menu</a>
+                <a href="pizza.html" class="btn">View Menu</a>
             </div>
             <div class="restaurant-card">
                 <img src="images/burger.png" alt="Burger Heaven">
                 <h3>Burger Heaven</h3>
                 <p>Juicy burgers, grilled to perfection.</p>
-                <a href="viewmenu.html" class="btn">View Menu</a>
+                <a href="burger.html" class="btn">View Menu</a>
             </div>
             <div class="restaurant-card">
                 <img src="images/sushi.png" alt="Sushi World">
@@ -115,31 +115,7 @@
             </div>
             <!-- Add more restaurants as needed -->
         </div>
-        <div class="restaurant-list">
-            <div class="restaurant-card">
-                <img src="images/seafood.png" alt="Seafood Shack">
-                <h3>Seafood Shack</h3>
-                <p>Fresh seafood, straight from the ocean.</p>
-                <a href="menu.html" class="btn">View Menu</a>
-            </div>
-            <div class="restaurant-card">
-                <img src="images/steak.png" alt="Steak House">
-                <h3>Steak House</h3>
-                <p>Juicy steaks, cooked to your liking.</p>
-                <a href="menu.html" class="btn">View Menu</a>
-            </div>
-            <div class="restaurant-card">
-                <img src="images/vegan.png" alt="Vegan Delight">
-                <h3>Vegan Delight</h3>
-                <p>Delicious vegan dishes.</p>
-                <a href="menu.html" class="btn">View Menu</a>
-            </div>
-            <div class="restaurant-card">
-                <img src="images/dessert.png" alt="Dessert Haven">
-                <h3>Dessert Haven</h3>
-                <p>Sweet treats and desserts.</p>
-                <a href="menu.html" class="btn">View Menu</a>
-            </div>
+        
             <!-- Add more restaurants as needed -->
         </div>
         <!-- Add more restaurants as needed -->
@@ -151,7 +127,7 @@
             <br> Developed by Steven. All rights reserved.</p>
     </footer>
 
-    <script>
+    <script src="login.js">
         // JavaScript to handle log out
         function logout() {
             // Remove JWT token from localStorage or cookies
@@ -160,6 +136,22 @@
             // Redirect to the login page
             window.location.href = 'login.html'; // Change this to your actual login page URL
         }
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = localStorage.getItem("userName"); // Retrieve from localStorage
+
+            if (userName) {
+                document.getElementById("welcomeMessage").textContent = `Welcome, ${userName}!`;
+            }
+        });
+
+        // JavaScript to handle log out
+        function logout() {
+            localStorage.removeItem('token'); 
+            localStorage.removeItem('userName'); // Clear user name from storage
+            window.location.href = 'login.html'; 
+        }
+        
+
     </script>
 </body>
 </html>

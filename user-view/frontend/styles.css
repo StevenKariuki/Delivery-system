@@ -58,15 +58,16 @@ header nav ul li a:hover, .cta:hover {
 .account{
     display: flex;
     justify-content:flex-end;
-    align-items: end;
+    margin-top: 20px;
+    
 }
-.Welcome{
-    margin-top: 30px;
-}
+
 .account button {
     margin-left: 20px;
     margin-top: 10px;
     border: solid;
+    height: 50px;
+    justify-content:end;
 }
 
 .account button:hover {

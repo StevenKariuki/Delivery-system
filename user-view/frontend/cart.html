@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Delivery - Cart</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+      .cart-nav{
+          text-decoration: none;
+          color: white;
+          font-weight: bold;
+          border: 1px solid;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+  </style>
 </head>
-<style>
-    .cart-nav{
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        border: 1px solid;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-</style>
 <body>
   <!-- Header -->
   <header>
@@ -36,13 +36,13 @@
   <section class="cart">
     <h1>Your Cart</h1>
     <div class="whole-cart">
-        <div class="cart-items">
-            <p>Your cart is empty!</p>
-          </div>
-          <div class="cart-summary">
-            <h3>Total: $0.00</h3>
-            <button class="checkout-btn" disabled>Proceed to payment</button>
-          </div>
+        <div class="cart-items" id="cart-items-container">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="cart-summary">
+            <h3>Total: $<span id="cart-total-price">0.00</span></h3>
+            <button class="checkout-btn" id="checkout-btn" disabled>Proceed to payment</button>
+        </div>
     </div>
   </section>
 
@@ -52,6 +52,54 @@
         <br> All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Fetch cart items on page load
+    window.onload = function() {
+        updateCartUI();
+    };
+
+    function updateCartUI() {
+        const token = localStorage.getItem("token");
+
+        fetch('/api/cart', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const totalPriceElement = document.getElementById('cart-total-price');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            let total = 0;
+
+            // Clear previous cart items
+            cartItemsContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty!</p>';
+                checkoutBtn.disabled = true;
+            } else {
+                data.forEach(item => {
+                    total += item.price * item.quantity;
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item">
+                            <h2>${item.name}</h2>
+                            <p>Quantity: ${item.quantity}</p>
+                            <p>Price: $${item.price}</p>
+                        </div>
+                    `;
+                });
+                totalPriceElement.innerText = total.toFixed(2);
+                checkoutBtn.disabled = false;  // Enable checkout button if items exist
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching cart items:', error);
+        });
+    }
+  </script>
 </body>
 </html>
