@@ -19,6 +19,7 @@
         header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             background-color: #ff4757;
             padding: 15px 20px;
             color: white;
@@ -45,25 +46,21 @@
         header ul li a:hover {
             background-color: #e84141;
         }
-        header nav{
-            display: flex;
-            justify-content: flex-end;
-            margin-left: 20px;
+
+        header nav {
+            flex: 1;
+            text-align: right;
         }
 
-        /* Tracking Page Styles */
         .tracking-page {
             max-width: 600px;
-            margin: 40px auto;
+            margin: 80px auto 40px;
             padding: 20px;
-            background-color: white;
+            background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .track-name{
-            border: solid;
-        }
         .tracking-page h1 {
             text-align: center;
             color: #ff4757;
@@ -72,36 +69,41 @@
         .tracking-page p {
             text-align: center;
             color: #555;
+            margin-top: -10px;
         }
 
         #tracking-form {
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
-            margin-top: 20px;
+            gap: 15px;
         }
 
         #tracking-form label {
-            margin-bottom: 8px;
             font-weight: bold;
             color: #555;
         }
 
         #tracking-form input {
             padding: 10px;
-            margin-bottom: 15px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 16px;
+        }
+
+        #tracking-form input:focus {
+            outline: none;
+            border-color: #ff4757;
         }
 
         #tracking-form .btn {
             background-color: #ff4757;
             color: white;
+            padding: 10px;
             border: none;
-            padding: 10px 15px;
             border-radius: 6px;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         #tracking-form .btn:hover {
@@ -110,11 +112,10 @@
 
         #tracking-status {
             margin-top: 30px;
-            background-color: #f7f7f7;
-            padding: 15px 20px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 6px;
             text-align: center;
+            animation: fadeIn 0.5s ease-in;
         }
 
         #tracking-status h2 {
@@ -123,18 +124,42 @@
         }
 
         #tracking-status p {
-            color: #555;
             font-size: 18px;
+            color: #555;
         }
 
-        /* Footer */
+        #tracking-status.success {
+            background-color: #eaf8ea;
+            color: #2e7d32;
+            border: 1px solid #2e7d32;
+        }
+
+        #tracking-status.error {
+            background-color: #fdecea;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+
         footer {
             text-align: center;
             padding: 15px;
             background-color: #333;
             color: white;
-            margin-top: 20px;
-            font-size: 14px;
+            margin-top: 30px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
@@ -147,7 +172,8 @@
                 <li><a href="index-user.html">Home</a></li>
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="cart.html">Cart</a></li>
-                <li><a class="track-name" href="track.html">Track Order</a></li>
+                <li><a class="track-name" href="tracking.html">Track Order</a></li>
+                <li><a href="profile.html">Profile</a></li>
             </ul>
         </nav>
     </header>
@@ -155,72 +181,66 @@
     <!-- Order Tracking Section -->
     <section class="tracking-page">
         <h1>Track Your Order</h1>
-        <p>Enter your order ID below to get the current status.</p>
+        <p>Enter your order ID below to get the current status of your order.</p>
         
-        <!-- Form to search for an order -->
+        <!-- Order ID Form -->
         <form id="tracking-form">
             <label for="order-id">Order ID</label>
             <input type="text" id="order-id" placeholder="e.g., 123456" required>
             <button type="button" id="track-button" class="btn">Track Order</button>
         </form>
 
-        <!-- Tracking Status -->
+        <!-- Order Tracking Status -->
         <div id="tracking-status">
-            <h2>Order Status</h2>
-            <p id="status-message">Please enter your Order ID to track your order.</p>
+            <p id="status-message">Please enter your <strong>Order ID</strong> above to track your order.</p>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 FoodDelivery. Serving deliciousness at your doorstep!</p>
+        <p>© 2023 FoodDelivery. Making your meals memorable!</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const trackButton = document.getElementById('track-button');
-            const statusMessage = document.getElementById('status-message');
+            const trackBtn = document.getElementById('track-button');
+            const statusMsg = document.getElementById('status-message');
+            const trackingStatus = document.getElementById('tracking-status');
 
-            // Dummy status data for demonstration
-            const orderStatuses = {
-                123456: "Preparing",
+            // Simulating a database of orders
+            const orderDatabase = {
+                123456: "Order Placed",
                 654321: "Out for Delivery",
-                111222: "Delivered",
-                789101: "Preparing",
+                789101: "Delivered",
+                112233: "Preparing",
             };
 
-            trackButton.addEventListener('click', () => {
+            // Event Listener for Track Button
+            trackBtn.addEventListener('click', () => {
                 const orderId = document.getElementById('order-id').value.trim();
 
-                if (!orderId) {
-                    statusMessage.innerText = "Please enter a valid Order ID.";
+                if (orderId === "") {
+                    trackingStatus.classList.remove('success', 'error');
+                    trackingStatus.classList.add('error');
+                    statusMsg.textContent = "Order ID cannot be empty.";
                     return;
                 }
 
-                // Simulate fetching order status
-                const status = orderStatuses[orderId];
+                // Check the database for the order
+                const orderStatus = orderDatabase[orderId];
 
-                if (status) {
-                    statusMessage.innerText = `Your order is currently: ${status}`;
+                if (orderStatus) {
+                    trackingStatus.classList.remove('error');
+                    trackingStatus.classList.add('success');
+                    statusMsg.textContent = `Your order is currently: ${orderStatus}`;
                 } else {
-                    statusMessage.innerText = "Order not found. Please check your Order ID.";
+                    trackingStatus.classList.remove('success');
+                    trackingStatus.classList.add('error');
+                    statusMsg.textContent = "Order not found. Please check your Order ID.";
                 }
             });
         });
     </script>
 </body>
 </html>
-<header>
-    <div class="logo">FoodDelivery</div>
-    <nav>
-        <ul>
-            <li><a href="index-user.html">Home</a></li>
-            <li><a href="menu.html">Menu</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="tracking.html">Track Order</a></li>
-            <li><a href="checkout.html">Check out</a></li>
-        </ul>
-    </nav>
-    <a class="cta" href="cart.html">Cart (0)</a>
-</header>

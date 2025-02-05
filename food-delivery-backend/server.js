@@ -125,9 +125,6 @@ app.post("/login", (req, res) => {
     });
 });
 
-
-
-
 // Middleware to Authenticate Token
 const authenticateToken = (req, res, next) => {
     const token = req.header("Authorization");
@@ -154,44 +151,6 @@ app.listen(PORT, () => {
 });
 
 // Route to Add Item to Cart
-app.post("/add-to-cart", authenticateToken, async (req, res) => {
-    const { foodItemId, quantity } = req.body;
-    const userId = req.user.id; // Get user ID from the authenticated token
-
-    if (!foodItemId || !quantity) {
-        return res.status(400).json({ message: "Food item ID and quantity are required" });
-    }
-
-    try {
-        // Get food item details from the menu
-        const [foodItem] = await query("SELECT * FROM menu_items WHERE id = ?", [foodItemId]);
-
-        if (!foodItem) {
-            return res.status(404).json({ message: "Food item not found" });
-        }
-
-        const price = foodItem.price; // Assuming the price is stored in the menu_items table
-
-        // Check if the item is already in the cart
-        const [cartItem] = await query("SELECT * FROM cart_items WHERE user_id = ? AND food_item_id = ?", [userId, foodItemId]);
-
-        if (cartItem) {
-            // If item exists in the cart, update the quantity
-            const updatedQuantity = cartItem.quantity + quantity;
-            await query("UPDATE cart_items SET quantity = ?, price = ? WHERE id = ?", [updatedQuantity, price, cartItem.id]);
-            res.json({ message: "Cart item updated", cartItemId: cartItem.id });
-        } else {
-            // If the item is not in the cart, add it
-            await query("INSERT INTO cart_items (user_id, food_item_id, quantity, price) VALUES (?, ?, ?, ?)", [userId, foodItemId, quantity, price]);
-            res.status(201).json({ message: "Item added to cart" });
-        }
-    } catch (error) {
-        console.error("Add to Cart Error:", error);
-        res.status(500).json({ message: "Server error, please try again!" });
-    }
-});
-
-// Add item to cart
 app.post("/api/add-to-cart", authenticateToken, async (req, res) => {
     try {
         const { foodItemId, quantity } = req.body;

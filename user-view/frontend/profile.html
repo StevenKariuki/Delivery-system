@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #ff4757;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        header nav ul li {
+            margin-right: 20px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #ffd700;
+        }
+
+        main {
+            margin-top: 90px;
+            padding: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-section {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .profile-section img {
+            width: 150px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #ff6347;
+            margin-bottom: 10px;
+        }
+
+        .profile-section h1 {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+
+        .profile-section p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .profile-section .edit-btn {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .profile-section .edit-btn:hover {
+            background-color: #e5533d;
+        }
+
+        .order-history {
+            background: #fff;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .order-history h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .order-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-card:last-child {
+            border-bottom: none;
+        }
+
+        .order-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+        }
+
+        .order-card .details {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .order-card .details h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .order-card .details small {
+            color: #777;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Vi_brant's FoodDelivery</div>
+        <nav>
+            <ul>
+                <li><a href="index-user.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="tracking.html">Track Order</a></li>
+                <li><a href="checkout.html">Check Out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main - Profile Section -->
+    <main>
+        <div class="profile-section">
+            <!-- Fetch and update this image dynamically -->
+            <img id="profilePicture" src="images/profile_me.png" alt="Profile Picture">
+            <h1 id="userName">Steven Kariuki</h1>
+            <p id="userEmail">Email: steven@gmail.com</p>
+            <p>Member since: January 2023</p>
+            <a href="profile-edit.html" class="edit-btn">Edit Profile</a>
+        </div>
+
+        <!-- Order History Section -->
+        <div class="order-history">
+            <h2>Order History</h2>
+            <!-- Example - This remains constant -->
+            <div class="order-card">
+                <img src="images/pizza.png" alt="Pizza">
+                <div class="details">
+                    <h4>Pizza Mania</h4>
+                    <small>Ordered on: 5th Oct 2023</small>
+                </div>
+                <strong>$12.99</strong>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 FoodDelivery. Developed by Steven. All rights reserved.</p>
+    </footer>
+    <script>
+        // Fetch profile data from localStorage
+        const defaultProfile = {
+            name: "Steven Kariuki",
+            email: "steven@gmail.com",
+            picture: "images/profile_me.png"
+        };
+
+        const storedProfile = JSON.parse(localStorage.getItem('profile')) || defaultProfile;
+
+        // Populate the profile UI with stored data
+        document.getElementById('userName').textContent = storedProfile.name;
+        document.getElementById('userEmail').textContent = `Email: ${storedProfile.email}`;
+        document.getElementById('profilePicture').src = storedProfile.picture;
+    </script>
+</body>
+</html>

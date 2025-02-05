@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | Food Delivery</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ff4757;
+            padding: 15px 20px;
+            color: white;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        header ul li a {
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+
+        header ul li a:hover {
+            background-color: #e84141;
+        }
+
+        header nav {
+            flex: 1;
+            text-align: right;
+        }
+
+        /* Edit Profile Page */
+        .edit-profile-container {
+            max-width: 600px;
+            margin: 80px auto 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #ff4757;
+            text-align: center;
+        }
+
+        .edit-profile-container form {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], 
+        input[type="email"], 
+        input[type="file"], 
+        button[type="submit"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus, 
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #ff4757;
+            box-shadow: 0 0 4px rgba(255, 71, 87, 0.5);
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button[type="submit"], 
+        button[type="button"] {
+            background-color: #ff4757;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #e84141;
+        }
+
+        .profile-picture-preview {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture-preview img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid #ff4757;
+            object-fit: cover;
+        }
+
+        .success-message {
+            background-color: #eaf8ea;
+            color: #2e7d32;
+            padding: 15px;
+            border: 1px solid #2e7d32;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .error-message {
+            background-color: #fdecea;
+            color: #d32f2f;
+            padding: 15px;
+            border: 1px solid #d32f2f;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">FoodDelivery</div>
+        <nav>
+            <ul>
+                <li><a href="index-user.html">Home</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Edit Profile Section -->
+    <section class="edit-profile-container">
+        <h1>Edit Profile</h1>
+
+        <div class="profile-picture-preview">
+            <img id="profile-image" src="images/default_profile.png" alt="Profile Picture">
+        </div>
+
+        <form id="edit-profile-form">
+            <label for="full-name">Full Name:</label>
+            <input type="text" id="full-name" value="" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" value="" required>
+
+            <label for="profile-picture">Upload Profile Picture:</label>
+            <input type="file" id="profile-picture" accept="image/*">
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <div class="success-message" id="success-message">Your profile has been updated successfully!</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 FoodDelivery. Making meals memorable!</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileForm = document.getElementById('edit-profile-form');
+            const profilePictureInput = document.getElementById('profile-picture');
+            const profileImage = document.getElementById('profile-image');
+            
+            const storedProfile = JSON.parse(localStorage.getItem('profile')) || {
+                name: "Steven Kariuki",
+                email: "steven@gmail.com",
+                picture: "images/profile_me.png"
+            };
+
+            // Populate form fields with stored data
+            document.getElementById('full-name').value = storedProfile.name;
+            document.getElementById('email').value = storedProfile.email;
+            profileImage.src = storedProfile.picture;
+
+            // Handle picture preview
+            profilePictureInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        profileImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Save changes to localStorage
+            profileForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const updatedProfile = {
+                    name: document.getElementById('full-name').value,
+                    email: document.getElementById('email').value,
+                    picture: profileImage.src
+                };
+
+                // Save to localStorage
+                localStorage.setItem('profile', JSON.stringify(updatedProfile));
+
+                // Show success message
+                document.getElementById('success-message').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('success-message').style.display = 'none';
+                }, 3000);
+
+                // Redirect to profile page after update
+                setTimeout(() => {
+                    window.location.href = 'profile.html';
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
