@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment | Pizza Palace</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        
+
+        header {
+            background-color: #ff4757;
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .cart-items {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .total-price {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+        }
+
+        input, select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Order | Payment</h1>
+        <nav>
+            <ul>
+                <li><a class="Home" href="index-user.html">Home</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="tracking.html">Track Order</a></li>
+                <li><a href="checkout.html">Check out</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <h2>Review Your Order</h2>
+        <div class="cart-items" id="cart-items">
+            <!-- Added items will be populated here dynamically using JavaScript -->
+        </div>
+        <p class="total-price" id="total-price">Total: $0.00</p>
+
+        <h2>Payment Information</h2>
+        <form id="payment-form">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" placeholder="Enter your phone number" required>
+
+            <label for="address">Delivery Address:</label>
+            <input type="text" id="address" placeholder="Enter your delivery address" required>
+
+            <label for="payment-method">Payment Method:</label>
+            <select id="payment-method" required>
+                <option value="credit-card">Credit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="paypal">Mpesa</option>
+                <option value="cash-on-delivery">Cash on Delivery</option>
+            </select>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to populate the cart items and total price
+        function loadCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsDiv = document.getElementById('cart-items');
+            const totalPriceElem = document.getElementById('total-price');
+
+            cartItemsDiv.innerHTML = ''; // Clear any existing items
+            let totalPrice = 0;
+
+            // Loop through the cart to display items
+            cart.forEach(item => {
+                // Assuming item details are stored with `name` and `price` (replace as needed)
+                const pizzaData = getPizzaDataById(item.foodItemId); // Replace with your function to fetch pizza data
+                const itemTotal = pizzaData.price * item.quantity;
+
+                totalPrice += itemTotal;
+
+                cartItemsDiv.innerHTML += `
+                    <div class="cart-item">
+                        <span>${pizzaData.name} x${item.quantity}</span>
+                        <span>$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            // Update total price
+            totalPriceElem.innerText = `Total: $${totalPrice.toFixed(2)}`;
+        }
+
+        // Mock function to fetch pizza data by ID (replace with actual function from your app)
+        function getPizzaDataById(id) {
+            const pizzaDatabase = [
+                { id: 1, name: "Classic Margherita Pizza", price: 12.99 },
+                { id: 2, name: "Pepperoni Pizza", price: 9.99 },
+                { id: 3, name: "Vegetarian Pizza", price: 7.99 },
+                { id: 4, name: "BBQ Chicken Pizza", price: 6.99 },
+                { id: 5, name: "Deluxe Cheese Pizza", price: 11.99 },
+            ];
+            return pizzaDatabase.find(pizza => pizza.id === id);
+        }
+
+        // Form submission handling
+        document.getElementById('payment-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const paymentMethod = document.getElementById('payment-method').value;
+
+            // Validate and proceed with payment (you can implement your API call or logic here)
+            alert(`Thank you, ${name}! Your order has been placed.`);
+            localStorage.removeItem('cart'); // Clear the cart
+            window.location.href = "index-user.html"; // Redirect to the homepage or confirmation page
+        });
+
+        // Load cart items on page load
+        window.onload = loadCartItems;
+    </script>
+</body>
+</html>

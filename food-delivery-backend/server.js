@@ -125,6 +125,13 @@ app.post("/login", (req, res) => {
     });
 });
 
+// logout route
+app.post("/logout", (res) => {
+    res.json({ message: "Logout successful" });
+});
+
+
+
 // Middleware to Authenticate Token
 const authenticateToken = (req, res, next) => {
     const token = req.header("Authorization");
