@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager's Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+      color: #343a40;
+    }
+
+    /* Header */
+    header {
+      background-color: #007bff;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    header nav a, .logout-button {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    header nav a:hover {
+      text-decoration: underline;
+    }
+
+    .logout-button {
+      background-color: #dc3545;
+      font-size: 0.9rem;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s ease;
+    }
+
+    .logout-button:hover {
+      background-color: #c82333;
+    }
+
+    /* Main Content */
+    .main-content {
+      padding: 2rem;
+    }
+
+    .section {
+      background: white;
+      margin: 2rem 0;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .section h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      color: #007bff;
+      border-bottom: 2px solid #f8f9fa;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      margin-bottom: 1rem;
+      color: #6c757d;
+      font-size: 1rem;
+    }
+
+    /* Table Styles */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .table th, .table td {
+      padding: 12px;
+      border: 1px solid #dee2e6;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .table th {
+      background-color: #f8f9fa;
+      color: #495057;
+      font-weight: 600;
+    }
+
+    .table td button {
+      padding: 0.5rem 1rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .table td button:hover {
+      background-color: #218838;
+    }
+
+    /* Footer */
+    footer {
+      padding: 1rem;
+      text-align: center;
+      background-color: #007bff;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>Manager Dashboard</h1>
+    <nav>
+      <a href="#orders">Manage Orders</a>
+      <a href="#restaurants">Manage Restaurants</a>
+      <a href="#employees">Team Management</a>
+      <a href="#analytics">Analytics</a>
+      <button class="logout-button" onclick="logout()">Log Out</button>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- Orders Section -->
+    <section id="orders" class="section">
+      <h2>Order Management</h2>
+      <p class="section-desc">View, update, or manage incoming customer orders.</p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Restaurant</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Pizza Palace</td>
+              <td>John Doe</td>
+              <td>Pending</td>
+              <td><button onclick="markComplete('001')">Mark Complete</button></td>
+            </tr>
+            <tr>
+              <td>002</td>
+              <td>Sushi Bar</td>
+              <td>Jane Doe</td>
+              <td>Pending</td>
+              <td><button onclick="markComplete('002')">Mark Complete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Restaurant Section -->
+    <section id="restaurants" class="section">
+      <h2>Restaurant Management</h2>
+      <p class="section-desc">Activate or deactivate partner restaurants in your network.</p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Restaurant ID</th>
+              <th>Restaurant Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>101</td>
+              <td>Pizza Palace</td>
+              <td>Active</td>
+              <td><button onclick="toggleRestaurantStatus('Pizza Palace')">Deactivate</button></td>
+            </tr>
+            <tr>
+              <td>102</td>
+              <td>Burger King</td>
+              <td>Inactive</td>
+              <td><button onclick="toggleRestaurantStatus('Burger King')">Activate</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Employee Section -->
+    <section id="employees" class="section">
+      <h2>Team Management</h2>
+      <p class="section-desc">Manage team members and assign roles or permissions.</p>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>201</td>
+              <td>Alex Smith</td>
+              <td>Customer Support</td>
+              <td>Active</td>
+              <td><button onclick="toggleEmployeeStatus('201')">Deactivate</button></td>
+            </tr>
+            <tr>
+              <td>202</td>
+              <td>Maria Garcia</td>
+              <td>Delivery Manager</td>
+              <td>Inactive</td>
+              <td><button onclick="toggleEmployeeStatus('202')">Activate</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section id="analytics" class="section">
+      <h2>Performance Analytics</h2>
+      <p class="section-desc">Monitor performance metrics such as order trends, revenue, and user satisfaction.</p>
+      <p style="text-align: center;"><em>Coming soon...</em></p>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2024 FoodDelivery Manager Dashboard | Built by Steven</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function logout() {
+      const confirmation = confirm("Are you sure you want to log out?");
+      if (confirmation) {
+        window.location.href = "login.html";
+      }
+    }
+
+    function markComplete(orderId) {
+      alert(`Order ${orderId} has been marked as complete.`);
+    }
+
+    function toggleRestaurantStatus(restaurantName) {
+      const currentButton = event.target;
+      const currentStatus = currentButton.textContent.trim();
+      if (currentStatus === "Deactivate") {
+        alert(`${restaurantName} has been deactivated.`);
+        currentButton.textContent = "Activate";
+      } else {
+        alert(`${restaurantName} has been activated.`);
+        currentButton.textContent = "Deactivate";
+      }
+    }
+
+    function toggleEmployeeStatus(employeeId) {
+      const currentButton = event.target;
+      const currentStatus = currentButton.textContent.trim();
+      if (currentStatus === "Deactivate") {
+        alert(`Employee ${employeeId} has been deactivated.`);
+        currentButton.textContent = "Activate";
+      } else {
+        alert(`Employee ${employeeId} has been activated.`);
+        currentButton.textContent = "Deactivate";
+      }
+    }
+  </script>
+</body>
+</html>

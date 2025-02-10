@@ -20,9 +20,9 @@ const db = mysql.createConnection({
 db.connect(err => {
     if (err) {
         console.error("Database connection failed: " + err.message);
-    } else {
-        console.log("Connected to MySQL Database ✅");
+        process.exit(1); // Exit the process if database connection fails
     }
+    console.log("Connected to Steven's MySQL Database ✅");
 });
 
 // Helper function to use async/await with MySQL
@@ -37,6 +37,22 @@ const query = (sql, params) => new Promise((resolve, reject) => {
 app.get("/", (req, res) => {
     res.send("Food Delivery API is Running!");
 });
+
+// Middleware to Authenticate Token
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.header("Authorization");
+
+    if (!authHeader) return res.status(403).json({ error: "Access denied" });
+
+    const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
+
+    jwt.verify(token, "your_jwt_secret", (err, user) => {
+        if (err) return res.status(403).json({ error: "Invalid token" });
+
+        req.user = user;
+        next();
+    });
+};
 
 // Get all users
 app.get("/users", async (req, res) => {
@@ -86,8 +102,9 @@ app.post("/signup", async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Save user in the database
-        await query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", [name, email, hashedPassword]);
+        // Save user in the database with default role "customer"
+        await query("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)", 
+            [name, email, hashedPassword, "customer"]);
 
         res.status(201).json({ message: "User created successfully!" });
 
@@ -98,63 +115,50 @@ app.post("/signup", async (req, res) => {
 });
 
 // User Login Route
-app.post("/login", (req, res) => {
-    const { email, password } = req.body;
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-    db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
-        if (result.length === 0) {
+        const users = await query("SELECT * FROM users WHERE email = ?", [email]);
+
+        if (users.length === 0) {
             return res.status(400).json({ error: "User not found" });
         }
 
-        const user = result[0];
+        const user = users[0];
 
-        bcrypt.compare(password, user.password, (err, isMatch) => {
-            if (!isMatch) {
-                return res.status(400).json({ error: "Invalid password" });
-            }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ error: "Invalid password" });
+        }
 
-            // Create JWT Token
-            const token = jwt.sign({ id: user.id, email: user.email }, "your_jwt_secret", { expiresIn: "1h" });
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: user.role }, 
+            "your_jwt_secret",
+            { expiresIn: "1h" }
+        );
 
-            res.json({ 
-                message: "Login successful", 
-                token, 
-                user: { name: user.name, email: user.email }  // Send user data
-            });
+        res.json({ 
+            message: "Login successful", 
+            token, 
+            user: { id: user.id, name: user.name, email: user.email, role: user.role }
         });
-    });
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
 });
 
-// logout route
-app.post("/logout", (res) => {
+// Logout Route
+app.post("/logout", (req, res) => {
     res.json({ message: "Logout successful" });
 });
-
-
-
-// Middleware to Authenticate Token
-const authenticateToken = (req, res, next) => {
-    const token = req.header("Authorization");
-
-    if (!token) return res.status(403).json({ error: "Access denied" });
-
-    jwt.verify(token, "your_jwt_secret", (err, user) => {
-        if (err) return res.status(403).json({ error: "Invalid token" });
-
-        req.user = user;
-        next();
-    });
-};
 
 // Profile Route (Protected)
 app.get("/profile", authenticateToken, (req, res) => {
     res.json({ message: "Welcome to your profile!", user: req.user });
-});
-
-// Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} 🚀`);
 });
 
 // Route to Add Item to Cart
@@ -210,4 +214,10 @@ app.get("/api/cart", authenticateToken, async (req, res) => {
         console.error("Get Cart Error:", error);
         res.status(500).json({ message: "Server error, please try again!" });
     }
+});
+
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} 🚀`);
 });
