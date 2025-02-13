@@ -4,9 +4,8 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cors = require('cors');
 
-app.use(cors());
+
 
 const app = express();
 app.use(cors({ origin: "http://your-frontend-domain.com" })); // Update with your frontend URL

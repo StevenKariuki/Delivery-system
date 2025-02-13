@@ -6,15 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
             await handleLogin();
         });
+    } else {
+        console.error("Login form not found");
     }
 
     // Update welcome message
     updateWelcomeMessage();
 
-    // Attach logout event listener
+    // Attach event listener for logout button
     const logoutButton = document.getElementById("logoutButton");
     if (logoutButton) {
         logoutButton.addEventListener("click", handleLogout);
+    } else {
+        console.error("Logout button not found");
     }
 });
 
@@ -68,14 +72,14 @@ function handleLogout() {
 
 // Function to update the welcome message
 function updateWelcomeMessage() {
+    const welcomeMessageElements = document.querySelectorAll(".welcome-message");
     const userName = localStorage.getItem("userName");
-    const welcomeMessageElements = document.querySelectorAll(".Welcome, #welcomeMessage");
 
-    // Update all welcome message elements
-    welcomeMessageElements.forEach((element) => {
-        element.textContent = userName ? `Welcome, ${userName}!` : "Welcome, Guest!";
-    });
+    if (welcomeMessageElements.length > 0) {
+        welcomeMessageElements.forEach((element) => {
+            element.textContent = userName ? `Welcome, ${userName}!` : "Welcome, Guest!";
+        });
+    } else {
+        console.error("Welcome message elements not found");
+    }
 }
-
-// Optional: Token expiration (future enhancement)
-// You can implement a token expiration check to automatically log out users after a certain time or upon expiration.
