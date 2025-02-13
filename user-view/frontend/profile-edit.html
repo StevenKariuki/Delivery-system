@@ -187,13 +187,13 @@
         <form id="edit-profile-form">
             <label for="full-name">Full Name:</label>
             <input type="text" id="full-name" value="" required>
-
+        
             <label for="email">Email:</label>
             <input type="email" id="email" value="" required>
-
+        
             <label for="profile-picture">Upload Profile Picture:</label>
             <input type="file" id="profile-picture" accept="image/*">
-
+        
             <button type="submit">Save Changes</button>
         </form>
 
@@ -208,57 +208,58 @@
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const profileForm = document.getElementById('edit-profile-form');
-            const profilePictureInput = document.getElementById('profile-picture');
-            const profileImage = document.getElementById('profile-image');
-            
-            const storedProfile = JSON.parse(localStorage.getItem('profile')) || {
-                name: "Steven Kariuki",
-                email: "steven@gmail.com",
-                picture: "images/profile_me.png"
+    const profileForm = document.getElementById('edit-profile-form');
+    const profilePictureInput = document.getElementById('profile-picture');
+    const profileImage = document.getElementById('profile-image');
+
+    // Function to preview the profile picture
+    profilePictureInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profileImage.src = e.target.result;
             };
+            reader.readAsDataURL(file);
+        } else {
+            alert("Please select a valid image file.");
+        }
+    });
 
-            // Populate form fields with stored data
-            document.getElementById('full-name').value = storedProfile.name;
-            document.getElementById('email').value = storedProfile.email;
-            profileImage.src = storedProfile.picture;
+    // Submit the form to the backend
+    profileForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const fullName = document.getElementById('full-name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        let profilePicture = profileImage.src; // You can send the base64 image or a URL here
 
-            // Handle picture preview
-            profilePictureInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        profileImage.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
+        // Send data to the backend
+        try {
+            const response = await fetch('/api/profile/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: fullName,
+                    email: email,
+                    picture: profilePicture
+                }),
             });
 
-            // Save changes to localStorage
-            profileForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const updatedProfile = {
-                    name: document.getElementById('full-name').value,
-                    email: document.getElementById('email').value,
-                    picture: profileImage.src
-                };
-
-                // Save to localStorage
-                localStorage.setItem('profile', JSON.stringify(updatedProfile));
-
-                // Show success message
-                document.getElementById('success-message').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('success-message').style.display = 'none';
-                }, 3000);
-
-                // Redirect to profile page after update
-                setTimeout(() => {
-                    window.location.href = 'profile.html';
-                }, 3000);
-            });
-        });
+            const result = await response.json();
+            if (result.success) {
+                alert('Profile updated successfully!');
+            } else {
+                alert('Failed to update profile. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+            alert('An error occurred. Please try again later.');
+        }
+    });
+});
     </script>
 </body>
 </html>

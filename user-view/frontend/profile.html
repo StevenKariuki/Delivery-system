@@ -76,30 +76,37 @@
             margin-bottom: 10px;
         }
 
-        .profile-section h1 {
-            font-size: 24px;
+        .profile-section h1, .profile-section p {
             margin: 10px 0;
         }
 
-        .profile-section p {
+        .profile-section .edit-btn,
+        .profile-section .logout-btn {
+            display: inline-block;
+            padding: 10px 20px;
             font-size: 16px;
-            color: #555;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
         }
 
         .profile-section .edit-btn {
             background-color: #ff6347;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 15px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
+            margin-right: 10px;
         }
 
         .profile-section .edit-btn:hover {
             background-color: #e5533d;
+        }
+
+        .profile-section .logout-btn {
+            background-color: #333;
+        }
+
+        .profile-section .logout-btn:hover {
+            background-color: #555;
         }
 
         .order-history {
@@ -133,20 +140,6 @@
             border-radius: 8px;
         }
 
-        .order-card .details {
-            flex: 1;
-            margin-left: 15px;
-        }
-
-        .order-card .details h4 {
-            margin: 0;
-            font-size: 18px;
-        }
-
-        .order-card .details small {
-            color: #777;
-        }
-
         footer {
             text-align: center;
             padding: 15px;
@@ -156,8 +149,21 @@
             font-size: 14px;
         }
 
-        footer p {
-            margin: 0;
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            header nav ul {
+                flex-direction: column;
+            }
+
+            .profile-section img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .order-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
@@ -179,26 +185,18 @@
     <!-- Main - Profile Section -->
     <main>
         <div class="profile-section">
-            <!-- Fetch and update this image dynamically -->
             <img id="profilePicture" src="images/profile_me.png" alt="Profile Picture">
-            <h1 id="userName">Steven Kariuki</h1>
-            <p id="userEmail">Email: steven@gmail.com</p>
-            <p>Member since: January 2023</p>
+            <h1 id="userName">Guest User</h1>
+            <p id="userEmail"> </p>
+            <p id="memberSince">Member since:</p>
             <a href="profile-edit.html" class="edit-btn">Edit Profile</a>
+            <button id="logout-button" class="logout-btn">Logout</button>
         </div>
 
         <!-- Order History Section -->
         <div class="order-history">
             <h2>Order History</h2>
-            <!-- Example - This remains constant -->
-            <div class="order-card">
-                <img src="images/pizza.png" alt="Pizza">
-                <div class="details">
-                    <h4>Pizza Mania</h4>
-                    <small>Ordered on: 5th Oct 2023</small>
-                </div>
-                <strong>$12.99</strong>
-            </div>
+            <div id="orderHistoryContainer"></div>
         </div>
     </main>
 
@@ -206,20 +204,52 @@
     <footer>
         <p>© 2023 FoodDelivery. Developed by Steven. All rights reserved.</p>
     </footer>
+
     <script>
-        // Fetch profile data from localStorage
-        const defaultProfile = {
-            name: "Steven Kariuki",
-            email: "steven@gmail.com",
-            picture: "images/profile_me.png"
-        };
+        document.addEventListener("DOMContentLoaded", () => {
+            const userName = localStorage.getItem("userName");
+            const userEmail = localStorage.getItem("userEmail");
+            const memberSince = localStorage.getItem("memberSince") || "January 2023";  
 
-        const storedProfile = JSON.parse(localStorage.getItem('profile')) || defaultProfile;
+            // if (!userName || !userEmail) {
+            //     window.location.href = 'login.html'; // Redirect to login if not authenticated
+            // }
 
-        // Populate the profile UI with stored data
-        document.getElementById('userName').textContent = storedProfile.name;
-        document.getElementById('userEmail').textContent = `Email: ${storedProfile.email}`;
-        document.getElementById('profilePicture').src = storedProfile.picture;
+            document.getElementById("userName").textContent =  userName;
+            document.getElementById("userEmail").textContent = `Email: ${userEmail}`;
+            document.getElementById("memberSince").textContent = `Member since: ${memberSince}`;
+
+            // Sample order data (replace with actual data if available)
+            const orders = [
+                { image: "images/pizza.png", name: "Pizza Mania", date: "5th Oct 2023", price: "$12.99" },
+                { image: "images/burger.png", name: "Burger Deluxe", date: "10th Jan 2023", price: "$9.99" }
+            ];
+
+            const orderHistoryContainer = document.getElementById("orderHistoryContainer");
+            orders.forEach(order => {
+                const orderCard = `
+                    <div class="order-card">
+                        <img src="${order.image}" alt="${order.name}">
+                        <div class="details">
+                            <h4>${order.name}</h4>
+                            <small>Ordered on: ${order.date}</small>
+                        </div>
+                        <strong>${order.price}</strong>
+                    </div>
+                `;
+                orderHistoryContainer.insertAdjacentHTML('beforeend', orderCard);
+            });
+
+            // Handle logout
+            document.getElementById('logout-button').addEventListener('click', () => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('memberSince');
+                alert("You have been logged out.");
+                window.location.href = 'login.html';
+            });
+        });
     </script>
 </body>
 </html>

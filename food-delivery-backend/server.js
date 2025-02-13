@@ -4,16 +4,19 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
+
+app.use(cors());
 
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "http://your-frontend-domain.com" })); // Update with your frontend URL
 app.use(express.json()); // Allow JSON requests
 
 // MySQL Database Connection
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",  // Default MySQL password is empty
+    password: "", // Default MySQL password is empty
     database: "food_delivery_system"
 });
 
@@ -33,6 +36,9 @@ const query = (sql, params) => new Promise((resolve, reject) => {
     });
 });
 
+// JWT Secret from environment variables
+const jwtSecret = process.env.JWT_SECRET || "default_secret";
+
 // Test Route
 app.get("/", (req, res) => {
     res.send("Food Delivery API is Running!");
@@ -41,14 +47,11 @@ app.get("/", (req, res) => {
 // Middleware to Authenticate Token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
-
-    if (!authHeader) return res.status(403).json({ error: "Access denied" });
+    if (!authHeader) return res.status(401).json({ error: "Access denied" });
 
     const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
-
-    jwt.verify(token, "your_jwt_secret", (err, user) => {
+    jwt.verify(token, jwtSecret, (err, user) => {
         if (err) return res.status(403).json({ error: "Invalid token" });
-
         req.user = user;
         next();
     });
@@ -93,6 +96,10 @@ app.post("/signup", async (req, res) => {
             return res.status(400).json({ message: "All fields are required!" });
         }
 
+        if (password.length < 6) {
+            return res.status(400).json({ message: "Password must be at least 6 characters" });
+        }
+
         // Check if the user already exists
         const existingUser = await query("SELECT * FROM users WHERE email = ?", [email]);
         if (existingUser.length > 0) {
@@ -135,7 +142,7 @@ app.post("/login", async (req, res) => {
         // Generate JWT token
         const token = jwt.sign(
             { id: user.id, email: user.email, role: user.role }, 
-            "your_jwt_secret",
+            jwtSecret,
             { expiresIn: "1h" }
         );
 
@@ -161,6 +168,57 @@ app.get("/profile", authenticateToken, (req, res) => {
     res.json({ message: "Welcome to your profile!", user: req.user });
 });
 
+// Route to Edit User Profile (Protected)
+app.put("/profile/edit", authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id; // Extract user ID from the token
+        const { name, email, password } = req.body;
+
+        // Check if at least one field is provided for update
+        if (!name && !email && !password) {
+            return res.status(400).json({ message: "At least one field must be provided for update!" });
+        }
+
+        // Fetch the current user from the database
+        const users = await query("SELECT * FROM users WHERE id = ?", [userId]);
+        if (users.length === 0) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Update fields only if they are provided
+        let updateFields = [];
+        let updateParams = [];
+
+        if (name) {
+            updateFields.push("name = ?");
+            updateParams.push(name);
+        }
+        if (email) {
+            updateFields.push("email = ?");
+            updateParams.push(email);
+        }
+        if (password) {
+            // Hash the new password before saving
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updateFields.push("password = ?");
+            updateParams.push(hashedPassword);
+        }
+
+        // Add the user ID to the parameters array
+        updateParams.push(userId);
+
+        // Update the user's profile in the database
+        const updateQuery = `UPDATE users SET ${updateFields.join(", ")} WHERE id = ?`;
+        await query(updateQuery, updateParams);
+
+        res.json({ message: "Profile updated successfully!" });
+    } catch (error) {
+        console.error("Profile Edit Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
+});
+
+
 // Route to Add Item to Cart
 app.post("/api/add-to-cart", authenticateToken, async (req, res) => {
     try {
@@ -169,6 +227,10 @@ app.post("/api/add-to-cart", authenticateToken, async (req, res) => {
 
         if (!foodItemId || !quantity) {
             return res.status(400).json({ message: "Food item ID and quantity are required!" });
+        }
+
+        if (!Number.isInteger(quantity) || quantity <= 0) {
+            return res.status(400).json({ message: "Quantity must be a positive integer" });
         }
 
         // Check if item already exists in the user's cart

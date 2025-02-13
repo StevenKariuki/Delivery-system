@@ -32,6 +32,13 @@
         .transparent-header {
             background-color: rgba(255, 255, 255, 0.5);
         }
+
+        .welcome-message{
+            text-align: center;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -55,7 +62,9 @@
 
     <!-- Account Section -->
     <div class="account">
-        <h3 class="Welcome" id="welcomeMessage">Welcome, Guest!</h3>
+        <div id="welcomeMessage" class="welcome-message">
+
+        </div>
         <button type="button" onclick="logout()">Log out</button>
     </div>
 
