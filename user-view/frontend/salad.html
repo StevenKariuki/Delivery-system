@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Salad</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stylemenu.css">
+    <style>
+        @keyframes logoAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .logo {
+            animation: logoAnimation 2s infinite;
+        }
+
+        .menu-nav {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border: 1px solid;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .menu-item {
+            animation: slideIn 1s ease-out;
+        }
+
+        .btn {
+            animation: bounce 3s infinite;
+        }
+        .btn:hover{
+            animation-play-state: paused;
+        }
+
+        /* Styles for the Back button */
+        .back-button {
+            position: fixed; 
+            top: 90px; 
+            left: 20px; 
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #ff5733; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease; 
+            z-index: 10; /* Ensure it stays on top of other elements */
+        }
+
+        .back-button:hover {
+            background-color: #c70039; /* Darker color on hover */
+            transform: scale3d(1.05, 1.05, 1); /* Slightly increase size on hover */
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="profile">
+            <img src="images/profile_icon.png" alt="">
+            <h4 class="profile-name"><a href="profile.html">Profile</a></h4>
+        </div>
+        <div class="logo">Salad Palace</div>
+        <nav>
+            <ul>
+                <li><a href="index-user.html">Home</a></li>
+                <li class="menu-nav"><a href="menu.html">Menu</a></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="tracking.html">Track Order</a></li>
+                <li><a href="checkout.html">Check out</a></li>
+            </ul>
+        </nav>
+        <!-- Back Button -->
+         <button class="back-button" onclick="goBack()">Back to Home</button>
+
+        <a class="cta" href="cart.html">Cart (0)</a>
+    </header>
+
+    <!-- Menu Section -->
+    <section class="menu">
+        <h1>Our Salad Menu</h1>
+        <p>For the hearty appetites – loaded with all your favorite meats and extra cheese</p>
+        <div class="menu-grid">
+            <!-- Menu Item 1 -->
+            <div class="menu-item">
+                <img src="images/sushi.png" alt="Margherita Pizza">
+                <h2>Classic Margherita Pizza:</h2>
+                <p>Savor the simplicity of fresh mozzarella, tomatoes, and basil with this classic Margherita pizza."</p>
+                <span class="price">$12.99</span>
+                <button class="btn" onclick="addToCart(1, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="menu-item">
+                <img src="images/sushi_1.png" alt="Cheeseburger">
+                <h2>Pepperoni Pizza</h2>
+                <p>Enjoy a timeless favorite with crispy pepperoni and gooey melted cheese.</p>
+                <span class="price">$9.99</span>
+                <button class="btn" onclick="addToCart(2, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="menu-item">
+                <img src="images/sushi_2.png" alt="Caesar Salad">
+                <h2>Vegetarian Pizza:</h2>
+                <p>Packed with vibrant veggies, this pizza is a healthy and delicious choice.</p>
+                <span class="price">$7.99</span>
+                <button class="btn" onclick="addToCart(3, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-item">
+                <img src="images/sushi_3.png" alt="Chocolate Cake">
+                <h2>BBQ Chicken Pizza</h2>
+                <p>Indulge in smoky BBQ chicken, tangy sauce, and fresh ingredients for the perfect slice.</p>
+                <span class="price">$6.99</span>
+                <button class="btn" onclick="addToCart(4, 1)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="menu-grid">
+            <!-- Menu Item 1 -->
+            <div class="menu-item">
+                <img src="images/sushi_4.png" alt="">
+                <h2>Classic Margherita Pizza:</h2>
+                <p>Savor the simplicity of fresh mozzarella, tomatoes, and basil with this classic Margherita pizza."</p>
+                <span class="price">$12.99</span>
+                <button class="btn" onclick="addToCart(5, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="menu-item">
+                <img src="images/sushi_5.png" alt="">
+                <h2>Pepperoni Pizza</h2>
+                <p>Enjoy a timeless favorite with crispy pepperoni and gooey melted cheese.</p>
+                <span class="price">$9.99</span>
+                <button class="btn" onclick="addToCart(6, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="menu-item">
+                <img src="images/sushi_6.png" alt="Caesar Salad">
+                <h2>Vegetarian Pizza:</h2>
+                <p>Packed with vibrant veggies, this pizza is a healthy and delicious choice.</p>
+                <span class="price">$7.99</span>
+                <button class="btn" onclick="addToCart(7, 1)">Add to Cart</button>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-item">
+                <img src="images/sushi_7.png" alt="Chocolate Cake">
+                <h2>BBQ Chicken Pizza</h2>
+                <p>Indulge in smoky BBQ chicken, tangy sauce, and fresh ingredients for the perfect slice.</p>
+                <span class="price">$6.99</span>
+                <button class="btn" onclick="addToCart(8, 1)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 FoodDelivery. All rights reserved. Powered by Steven's Deliciousness!</p>
+    </footer>
+
+    <script>
+        // Add Item to Cart Function
+        function addToCart(foodItemId, quantity) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.foodItemId === foodItemId);
+
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ foodItemId, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartUI();
+            alert('Item added to cart');
+        }
+
+        // Function to update Cart UI
+        function updateCartUI() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartIcon = document.querySelector('.cta');
+            cartIcon.textContent = `Cart (${cartCount})`;
+        }
+
+        // Back button functionality
+        function goBack() {
+            window.location.href = "index-user.html";
+        }
+
+        // Call to initialize cart UI
+        window.onload = function() {
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
