@@ -8,7 +8,12 @@ const jwt = require("jsonwebtoken");
 
 
 const app = express();
-app.use(cors({ origin: "http://your-frontend-domain.com" })); // Update with your frontend URL
+app.use(cors({
+    origin: "http://127.0.0.1:5500",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
+ // Update with your frontend URL
 app.use(express.json()); // Allow JSON requests
 
 // MySQL Database Connection
