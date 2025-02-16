@@ -44,11 +44,16 @@
       margin-bottom: 1rem;
       border: 1px solid #ddd;
       border-radius: 5px;
+      font-size: 1rem;
     }
 
     .login-container input:focus {
-      border-color: #ffa500; /* Orange for focus */
+      border-color: #ffa500;
       outline: none;
+    }
+
+    .login-container input.error {
+      border-color: red;
     }
 
     .login-container .btn {
@@ -64,13 +69,18 @@
     }
 
     .login-container .btn:hover {
-      background: #ffa500; /* Orange hover */
+      background: #ffa500;
+    }
+
+    .login-container .btn.loading {
+      background: grey;
+      cursor: not-allowed;
     }
 
     .error-message {
       color: red;
       font-size: 0.9rem;
-      display: none; /* Start hidden */
+      display: none;
       margin-bottom: 1rem;
     }
   </style>
@@ -78,45 +88,67 @@
 <body>
   <div class="login-container">
     <h1>Admin Login</h1>
-    <form id="adminLoginForm">
+    <form id="adminLoginForm" onsubmit="return false">
       <label for="username">Username</label>
-      <input type="text" id="username" placeholder="Enter your username" required>
+      <input type="text" id="username" placeholder="Enter your username" required autofocus>
 
       <label for="password">Password</label>
       <input type="password" id="password" placeholder="Enter your password" required>
 
-      <div class="error-message" id="errorMessage">Invalid username or password</div>
+      <div class="error-message" id="errorMessage" aria-live="polite">Invalid username or password</div>
 
-      <button type="button" class="btn" onclick="adminLogin()">Log In</button>
+      <button type="button" class="btn" id="loginButton" onclick="adminLogin()">Log In</button>
     </form>
   </div>
 
   <script>
-    // Simulated admin credentials
     const ADMIN_CREDENTIALS = {
       username: "admin",
       password: "admin123"
     };
 
     function adminLogin() {
-      // Get the input values
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const loginButton = document.getElementById("loginButton");
 
-      // Verify credentials
-      if (
-        username === ADMIN_CREDENTIALS.username &&
-        password === ADMIN_CREDENTIALS.password
-      ) {
-        // Redirect to manager dashboard (replace 'index-manager.html' with your dashboard file)
-        alert("Login successful! Redirecting to the dashboard...");
-        window.location.href = "index-admin.html";
-      } else {
-        // Show error message
-        const errorMessage = document.getElementById("errorMessage");
-        errorMessage.style.display = "block";
+      if (username === "" || password === "") {
+        showError("Please fill in all fields.");
+        return;
       }
+
+      loginButton.disabled = true;
+      loginButton.classList.add("loading");
+
+      setTimeout(() => {
+        if (
+          username === ADMIN_CREDENTIALS.username &&
+          password === ADMIN_CREDENTIALS.password
+        ) {
+          alert("Login successful! Redirecting to the dashboard...");
+          window.location.href = "index-admin.html";
+        } else {
+          showError("Invalid username or password.");
+        }
+
+        loginButton.disabled = false;
+        loginButton.classList.remove("loading");
+      }, 1000); // Simulate loading delay
     }
+
+    function showError(message) {
+      const errorMessage = document.getElementById("errorMessage");
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
+    }
+
+    document.getElementById("username").addEventListener("input", () => {
+      document.getElementById("errorMessage").style.display = "none";
+    });
+
+    document.getElementById("password").addEventListener("input", () => {
+      document.getElementById("errorMessage").style.display = "none";
+    });
   </script>
 </body>
 </html>

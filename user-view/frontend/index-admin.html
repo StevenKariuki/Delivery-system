@@ -3,96 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manager's Dashboard</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Manager Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* Global Styling */
-    body {
+      /* Global Styles */
+      body {
       font-family: 'Roboto', sans-serif;
-      background-color: #f8f9fa;
       margin: 0;
       padding: 0;
-      color: #343a40;
+      background-color: #f5f6fa;
+      color: #333;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
 
     /* Header */
     header {
       background-color: #007bff;
       color: white;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     header h1 {
-      margin: 0;
+      font-size: 1.8rem;
     }
 
-    header nav a, .logout-button {
+    header nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    header nav a {
       color: white;
-      text-decoration: none;
-      margin-left: 20px;
       font-weight: 500;
-      font-size: 1rem;
     }
 
-    header nav a:hover {
-      text-decoration: underline;
-    }
-
-    .logout-button {
+    header .logout-btn {
       background-color: #dc3545;
-      font-size: 0.9rem;
+      color: white;
       border: none;
       padding: 0.5rem 1rem;
-      cursor: pointer;
+      font-size: 1rem;
       border-radius: 5px;
+      cursor: pointer;
       transition: 0.3s ease;
     }
 
-    .logout-button:hover {
+    header .logout-btn:hover {
       background-color: #c82333;
     }
 
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      margin-top: 70px; 
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .sidebar a {
+      color: white;
+      display: block;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+
     /* Main Content */
-    .main-content {
+    .content {
+      margin-left: 270px;
       padding: 2rem;
     }
 
     .section {
-      background: white;
-      margin: 2rem 0;
+      background-color: white;
       padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 0.3s ease-in-out;
+      margin-bottom: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .section h2 {
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-      color: #007bff;
-      border-bottom: 2px solid #f8f9fa;
+      font-size: 1.6rem;
+      border-bottom: 2px solid #e9ecef;
       padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
 
-    .section-desc {
-      margin-bottom: 1rem;
+    .section p {
       color: #6c757d;
-      font-size: 1rem;
+    }
+
+    /* Button Style */
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      margin-top: 1rem;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
     }
 
     /* Table Styles */
-    .table-container {
-      width: 100%;
-      overflow-x: auto;
-    }
-
     .table {
       width: 100%;
       border-collapse: collapse;
@@ -100,221 +155,251 @@
     }
 
     .table th, .table td {
-      padding: 12px;
-      border: 1px solid #dee2e6;
       text-align: left;
-      font-size: 0.9rem;
+      border: 1px solid #dee2e6;
+      padding: 12px;
     }
 
     .table th {
       background-color: #f8f9fa;
-      color: #495057;
-      font-weight: 600;
+      font-weight: bold;
     }
 
     .table td button {
       padding: 0.5rem 1rem;
-      background-color: #28a745;
-      color: white;
       border: none;
       border-radius: 5px;
-      font-size: 0.8rem;
+      color: white;
       cursor: pointer;
-      transition: 0.3s ease;
     }
 
-    .table td button:hover {
+    .success {
+      background-color: #28a745;
+    }
+
+    .success:hover {
       background-color: #218838;
     }
 
     /* Footer */
     footer {
-      padding: 1rem;
       text-align: center;
+      padding: 1rem;
       background-color: #007bff;
       color: white;
-      font-size: 0.9rem;
     }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: auto;
+        height: auto;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .content {
+        margin-left: 0;
       }
     }
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
+   <!-- Header -->
+   <header>
     <h1>Manager Dashboard</h1>
     <nav>
-      <a href="#orders">Manage Orders</a>
-      <a href="#restaurants">Manage Restaurants</a>
-      <a href="#employees">Team Management</a>
-      <a href="#analytics">Analytics</a>
-      <button class="logout-button" onclick="logout()">Log Out</button>
+      <a href="#users">Users</a>
+      <a href="#products">Products</a>
+      <a href="#orders">Orders</a>
     </nav>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
   </header>
 
-  <!-- MAIN CONTENT -->
-  <div class="main-content">
-    <!-- Orders Section -->
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="#users">User Management</a>
+    <a href="#products">Product Management</a>
+    <a href="#orders">Order Management</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- User Management -->
+    <section id="users" class="section">
+      <h2>User Management</h2>
+      <p>Manage users, their roles, and pending user requests.</p>
+      <table class="table" id="user-table">
+        <thead>
+          <tr>
+            <th>User ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="btn" onclick="openAddModal('user')">Add New User</button>
+    </section>
+
+    <!-- Product Management -->
+    <section id="products" class="section">
+      <h2>Product Management</h2>
+      <p>Add, edit, or remove items from the menu.</p>
+      <table class="table" id="product-table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button class="btn" onclick="openAddModal('product')">Add New Product</button>
+    </section>
+
+    <!-- Order Management -->
     <section id="orders" class="section">
       <h2>Order Management</h2>
-      <p class="section-desc">View, update, or manage incoming customer orders.</p>
-      <div class="table-container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Restaurant</th>
-              <th>Customer</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>001</td>
-              <td>Pizza Palace</td>
-              <td>John Doe</td>
-              <td>Pending</td>
-              <td><button onclick="markComplete('001')">Mark Complete</button></td>
-            </tr>
-            <tr>
-              <td>002</td>
-              <td>Sushi Bar</td>
-              <td>Jane Doe</td>
-              <td>Pending</td>
-              <td><button onclick="markComplete('002')">Mark Complete</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Restaurant Section -->
-    <section id="restaurants" class="section">
-      <h2>Restaurant Management</h2>
-      <p class="section-desc">Activate or deactivate partner restaurants in your network.</p>
-      <div class="table-container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Restaurant ID</th>
-              <th>Restaurant Name</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>101</td>
-              <td>Pizza Palace</td>
-              <td>Active</td>
-              <td><button onclick="toggleRestaurantStatus('Pizza Palace')">Deactivate</button></td>
-            </tr>
-            <tr>
-              <td>102</td>
-              <td>Burger King</td>
-              <td>Inactive</td>
-              <td><button onclick="toggleRestaurantStatus('Burger King')">Activate</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Employee Section -->
-    <section id="employees" class="section">
-      <h2>Team Management</h2>
-      <p class="section-desc">Manage team members and assign roles or permissions.</p>
-      <div class="table-container">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Employee ID</th>
-              <th>Name</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>201</td>
-              <td>Alex Smith</td>
-              <td>Customer Support</td>
-              <td>Active</td>
-              <td><button onclick="toggleEmployeeStatus('201')">Deactivate</button></td>
-            </tr>
-            <tr>
-              <td>202</td>
-              <td>Maria Garcia</td>
-              <td>Delivery Manager</td>
-              <td>Inactive</td>
-              <td><button onclick="toggleEmployeeStatus('202')">Activate</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Analytics Section -->
-    <section id="analytics" class="section">
-      <h2>Performance Analytics</h2>
-      <p class="section-desc">Monitor performance metrics such as order trends, revenue, and user satisfaction.</p>
-      <p style="text-align: center;"><em>Coming soon...</em></p>
+      <p>View, update, or manage customer orders.</p>
+      <table class="table" id="order-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </section>
   </div>
 
-  <!-- FOOTER -->
+  <!-- Modal for Adding/Editing -->
+  <div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; box-shadow: 0 0 15px rgba(0,0,0,0.3); border-radius: 10px;">
+    <h3 id="modal-title">Modal Title</h3>
+    <form id="modal-form" onsubmit="handleModalSubmit(event)">
+      <input type="hidden" id="entity-type" />
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="modal-name" required />
+      </div>
+      <div id="price-field" style="display: none;">
+        <label for="price">Price:</label>
+        <input type="number" id="modal-price" step="0.01" />
+      </div>
+      <button type="submit" class="btn">Submit</button>
+      <button type="button" class="btn-danger" onclick="closeModal()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2024 FoodDelivery Manager Dashboard | Built by Steven</p>
+    <p>© 2025 Manager Dashboard</p>
   </footer>
 
-  <!-- JavaScript -->
   <script>
-    function logout() {
-      const confirmation = confirm("Are you sure you want to log out?");
-      if (confirmation) {
-        window.location.href = "login.html";
-      }
-    }
+        // Initial Data Objects
+        let users = [{ id: "001", name: "John Doe", role: "Customer" }, { id: "002", name: "Jane Smith", role: "Admin" }];
+    let products = [{ id: "P001", name: "Product 1", price: "$10" }, { id: "P002", name: "Product 2", price: "$20" }];
+    let orders = [{ id: "O001", customer: "John Doe", status: "Pending" }];
 
-    function markComplete(orderId) {
-      alert(`Order ${orderId} has been marked as complete.`);
-    }
+    // Reusable Render Functions
+    const renderTable = (tableId, data, actions) => {
+      const table = document.querySelector(`#${tableId} tbody`);
+      table.innerHTML = data.map(row => `
+        <tr>
+          ${Object.values(row).map(value => `<td>${value}</td>`).join('')}
+          <td>${actions(row)}</td>
+        </tr>
+      `).join('');
+    };
 
-    function toggleRestaurantStatus(restaurantName) {
-      const currentButton = event.target;
-      const currentStatus = currentButton.textContent.trim();
-      if (currentStatus === "Deactivate") {
-        alert(`${restaurantName} has been deactivated.`);
-        currentButton.textContent = "Activate";
-      } else {
-        alert(`${restaurantName} has been activated.`);
-        currentButton.textContent = "Deactivate";
-      }
-    }
+    const renderUsers = () => renderTable('user-table', users, user =>
+      `<button class="btn-danger" onclick="confirmRemove('user', '${user.id}')">Remove</button>`
+    );
 
-    function toggleEmployeeStatus(employeeId) {
-      const currentButton = event.target;
-      const currentStatus = currentButton.textContent.trim();
-      if (currentStatus === "Deactivate") {
-        alert(`Employee ${employeeId} has been deactivated.`);
-        currentButton.textContent = "Activate";
-      } else {
-        alert(`Employee ${employeeId} has been activated.`);
-        currentButton.textContent = "Deactivate";
+    const renderProducts = () => renderTable('product-table', products, product =>
+      `<button class="btn" onclick="openEditModal('product', '${product.id}')">Edit</button>
+       <button class="btn-danger" onclick="confirmRemove('product', '${product.id}')">Remove</button>`
+    );
+
+    const renderOrders = () => renderTable('order-table', orders, order =>
+      `<button class="btn success" onclick="updateOrderStatus('${order.id}')">${order.status === 'Pending' ? 'Mark as Completed' : 'Completed'}</button>`
+    );
+
+    // Modal for Adding/Editing Entities
+    const openAddModal = (type) => {
+      document.querySelector("#entity-type").value = type;
+      document.querySelector("#modal-title").textContent = `Add New ${type}`;
+      document.getElementById("price-field").style.display = type === 'product' ? 'block' : 'none';
+      document.getElementById("modal").style.display = 'block';
+    };
+
+    const openEditModal = (type, id) => {
+      const entity = type === 'user' ? users.find(user => user.id === id) : products.find(product => product.id === id);
+      document.querySelector("#modal-title").textContent = `Edit ${type}`;
+      document.querySelector("#entity-type").value = type;
+      document.querySelector("#modal-name").value = entity.name;
+      if (type === 'product') {
+        document.querySelector("#modal-price").value = entity.price.replace('$', '');
       }
-    }
+      document.getElementById("price-field").style.display = type === 'product' ? 'block' : 'none';
+      document.getElementById("modal").style.display = 'block';
+    };
+
+    const closeModal = () => {
+      document.getElementById("modal").style.display = 'none';
+    };
+
+    const handleModalSubmit = (event) => {
+      event.preventDefault();
+      const type = document.querySelector("#entity-type").value;
+      const name = document.querySelector("#modal-name").value;
+      if (type === 'user') {
+        users.push({ id: `00${users.length + 1}`, name, role: "Customer" });
+        renderUsers();
+      } else if (type === 'product') {
+        const price = `$${parseFloat(document.querySelector("#modal-price").value).toFixed(2)}`;
+        products.push({ id: `P00${products.length + 1}`, name, price });
+        renderProducts();
+      }
+      closeModal();
+    };
+
+    // Remove Entities
+    const confirmRemove = (type, id) => {
+      if (confirm(`Are you sure you want to remove this ${type}?`)) {
+        if (type === 'user') {
+          users = users.filter(user => user.id !== id);
+          renderUsers();
+        } else if (type === 'product') {
+          products = products.filter(product => product.id !== id);
+          renderProducts();
+        }
+      }
+    };
+    // Log Out Function
+    const logout = () => {
+      // Perform any necessary cleanup or state reset
+      alert("You have been logged out.");
+      // Redirect to login page or home page
+      window.location.href = "login-admin.html";
+    };
+
+    // Update Order Status
+    const updateOrderStatus = (id) => {
+      orders = orders.map(order => order.id === id ? { ...order, status: 'Completed' } : order);
+      renderOrders();
+    };
+
+    // Initial Render
+    renderUsers();
+    renderProducts();
+    renderOrders();
   </script>
 </body>
 </html>

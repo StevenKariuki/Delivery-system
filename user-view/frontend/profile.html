@@ -165,6 +165,28 @@
                 align-items: flex-start;
             }
         }
+         /* Styles for the Back button */
+        .back-button {
+                position: fixed; 
+                top: 90px; 
+                left: 20px; 
+                padding: 10px 20px;
+                font-size: 16px;
+                color: #ffffff;
+                background-color: #ff5733; 
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease; 
+                z-index: 10; /* Ensure it stays on top of other elements */
+            }
+
+            .back-button:hover {
+                background-color: #c70039; /* Darker color on hover */
+                transform: scale3d(1.05, 1.05, 1); /* Slightly increase size on hover */
+                
+            }
     </style>
 </head>
 <body>
@@ -181,17 +203,19 @@
             </ul>
         </nav>
     </header>
+    <button class="back-button" onclick="goBack()">Back to Home</button>
 
     <!-- Main - Profile Section -->
     <main>
         <div class="profile-section">
-            <img id="profilePicture" src="images/profile_me.png" alt="Profile Picture">
+            <img id="profilePicture" src="images/profile_icon.png" alt="Profile Picture">
             <h1 id="userName">Guest User</h1>
             <p id="userEmail"> </p>
             <p id="memberSince">Member since:</p>
             <a href="profile-edit.html" class="edit-btn">Edit Profile</a>
             <button id="logout-button" class="logout-btn">Logout</button>
         </div>
+
 
         <!-- Order History Section -->
         <div class="order-history">
@@ -203,9 +227,14 @@
     <!-- Footer -->
     <footer>
         <p>© 2023 FoodDelivery. Developed by Steven. All rights reserved.</p>
+        
     </footer>
 
     <script>
+        function goBack(){
+            window.location.href = 'index-user.html';
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const userName = localStorage.getItem("userName");
             const userEmail = localStorage.getItem("userEmail");

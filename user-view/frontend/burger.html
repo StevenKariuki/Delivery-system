@@ -8,6 +8,35 @@
   <link rel="stylesheet" href="stylemenu.css">
 </head>
 <style>
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    #searchInput {
+        width: 300px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 1rem;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    button:hover {
+        background-color: rgb(182, 113, 113);
+    }
       @keyframes logoAnimation {
       0% { transform: scale(1); }
       50% { transform: scale(1.2.8); }
@@ -70,6 +99,11 @@
 
     <a class="cta" href="cart.html">Cart (0)</a>
   </header>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for Burger..." onkeyup="searchRestaurants()">
+    <button onclick="searchRestaurants()">Search</button>
+  </div>
 
   <!-- Menu Section -->
   <section class="menu">
@@ -160,6 +194,29 @@
     function goBack(){
       window.location.href = "index-user.html";
     }
+    function searchRestaurants() {
+      // Get the search input value
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+
+      // Get all menu items
+      const menuItems = document.querySelectorAll(".menu-item");
+
+      // Loop through each menu item
+      menuItems.forEach((item) => {
+        // Get the burger name (h2 tag inside each menu item)
+        const itemName = item.querySelector("h2").textContent.toLowerCase();
+
+        // Check if the burger name includes the search input
+        if (itemName.includes(searchInput)) {
+          // Show the item if it matches
+          item.style.display = "block";
+        } else {
+          // Hide the item if it doesn't match
+          item.style.display = "none";
+        }
+      });
+    }
+
   </script>
 </body>
 </html>

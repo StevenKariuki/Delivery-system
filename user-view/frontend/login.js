@@ -21,6 +21,22 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Logout button not found");
     }
 });
+// Search functionality
+
+function searchRestaurants() {
+    const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+    const restaurantCards = document.querySelectorAll(".restaurant-card");
+
+    restaurantCards.forEach((card) => {
+        const restaurantName = card.querySelector("h3").textContent.toLowerCase();
+        if (restaurantName.includes(searchQuery)) {
+            card.style.display = "block"; // Show the card
+        } else {
+            card.style.display = "none"; // Hide the card
+        }
+    });
+}
+
 
 // Function to handle login
 async function handleLogin() {

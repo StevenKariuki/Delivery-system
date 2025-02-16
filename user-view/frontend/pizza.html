@@ -7,6 +7,36 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="stylemenu.css">
     <style>
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    #searchInput {
+        width: 300px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 1rem;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    button:hover {
+        background-color: rgb(182, 113, 113);
+    }
+
         @keyframes logoAnimation {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -100,6 +130,11 @@
 
         <a class="cta" href="cart.html">Cart (0)</a>
     </header>
+
+    <!-- Add this section below the header -->    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for pizza..." onkeyup="searchRestaurants()">
+        <button onclick="searchRestaurants()">Search</button>
+    </div>
 
     <!-- Menu Section -->
     <section class="menu">
@@ -218,6 +253,21 @@
         function goBack() {
             window.location.href = "index-user.html";
         }
+
+        // Search functionality
+        function searchRestaurants() {
+        const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+        const menuItems = document.querySelectorAll(".menu-item");
+
+        menuItems.forEach((item) => {
+            const itemName = item.querySelector("h2").textContent.toLowerCase();
+            if (itemName.includes(searchQuery)) {
+                item.style.display = "block"; // Show the item
+            } else {
+                item.style.display = "none"; // Hide the item
+            }
+        });
+         }
 
         // Call to initialize cart UI
         window.onload = function() {
