@@ -204,43 +204,37 @@
     <!-- JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const trackBtn = document.getElementById('track-button');
-            const statusMsg = document.getElementById('status-message');
-            const trackingStatus = document.getElementById('tracking-status');
+        const trackBtn = document.getElementById('track-button');
+        const statusMsg = document.getElementById('status-message');
+        const trackingStatus = document.getElementById('tracking-status');
 
-            // Simulating a database of orders
-            const orderDatabase = {
-                123456: "Order Placed",
-                654321: "Out for Delivery",
-                789101: "Delivered",
-                112233: "Preparing",
-            };
+        // Event Listener for Track Button
+        trackBtn.addEventListener('click', () => {
+            const orderId = document.getElementById('order-id').value.trim();
 
-            // Event Listener for Track Button
-            trackBtn.addEventListener('click', () => {
-                const orderId = document.getElementById('order-id').value.trim();
+            if (orderId === "") {
+                trackingStatus.classList.remove('success', 'error');
+                trackingStatus.classList.add('error');
+                statusMsg.textContent = "Order ID cannot be empty.";
+                return;
+            }
 
-                if (orderId === "") {
-                    trackingStatus.classList.remove('success', 'error');
-                    trackingStatus.classList.add('error');
-                    statusMsg.textContent = "Order ID cannot be empty.";
-                    return;
-                }
+            // Retrieve the order details from localStorage (or database in a real application)
+            const orderDetails = JSON.parse(localStorage.getItem(`order-${orderId}`));
 
-                // Check the database for the order
-                const orderStatus = orderDatabase[orderId];
-
-                if (orderStatus) {
-                    trackingStatus.classList.remove('error');
-                    trackingStatus.classList.add('success');
-                    statusMsg.textContent = `Your order is currently: ${orderStatus}`;
-                } else {
-                    trackingStatus.classList.remove('success');
-                    trackingStatus.classList.add('error');
-                    statusMsg.textContent = "Order not found. Please check your Order ID.";
-                }
-            });
+            if (orderDetails) {
+                trackingStatus.classList.remove('error');
+                trackingStatus.classList.add('success');
+                statusMsg.textContent = `Your order is currently: ${orderDetails.status}`;
+            } else {
+                trackingStatus.classList.remove('success');
+                trackingStatus.classList.add('error');
+                statusMsg.textContent = "Order not found. Please check your Order ID.";
+            }
         });
+    });
+</script>
+
     </script>
 </body>
 </html>

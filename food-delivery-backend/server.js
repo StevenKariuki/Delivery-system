@@ -13,6 +13,7 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
+
  // Update with your frontend URL
 app.use(express.json()); // Allow JSON requests
 
@@ -282,8 +283,124 @@ app.get("/api/cart", authenticateToken, async (req, res) => {
     }
 });
 
+// Route to Place Order
+app.post("/api/place-order", authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;  // Extract user id from the token
+        const { paymentMethod, deliveryAddress } = req.body;
+
+        // Check if cart is empty
+        const cartItems = await query(
+            "SELECT * FROM cart WHERE user_id = ?",
+            [userId]
+        );
+
+        if (cartItems.length === 0) {
+            return res.status(400).json({ message: "Cart is empty. Add items to cart before placing an order." });
+        }
+
+        // Create the order entry
+        const orderDate = new Date().toISOString().slice(0, 19).replace("T", " "); // Format date
+        const totalAmount = cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+
+        // Insert order into the orders table
+        const result = await query(
+            "INSERT INTO orders (user_id, payment_method, delivery_address, total_amount, order_date) VALUES (?, ?, ?, ?, ?)",
+            [userId, paymentMethod, deliveryAddress, totalAmount, orderDate]
+        );
+
+        const orderId = result.insertId;
+
+        // Insert order items into the order_items table
+        const orderItemsPromises = cartItems.map(item =>
+            query(
+                "INSERT INTO order_items (order_id, food_item_id, quantity, price) VALUES (?, ?, ?, ?)",
+                [orderId, item.food_item_id, item.quantity, item.price]
+            )
+        );
+
+        // Wait for all order items to be inserted
+        await Promise.all(orderItemsPromises);
+
+        // Clear the cart after placing the order
+        await query("DELETE FROM cart WHERE user_id = ?", [userId]);
+
+        // Return the unique order ID to the user
+        res.json({ message: "Order placed successfully!", orderId: orderId });
+    } catch (error) {
+        console.error("Place Order Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
+});
+
+// Route to Track Order
+app.get("/api/track-order/:orderId", authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { orderId } = req.params;
+
+        // Check if the order belongs to the user
+        const order = await query("SELECT * FROM orders WHERE id = ? AND user_id = ?", [orderId, userId]);
+
+        if (order.length === 0) {
+            return res.status(404).json({ message: "Order not found or you don't have access to it." });
+        }
+
+        // Get the items in the order
+        const orderItems = await query("SELECT * FROM order_items WHERE order_id = ?", [orderId]);
+
+        // Include order items and return order details
+        res.json({
+            order: order[0],
+            items: orderItems
+        });
+    } catch (error) {
+        console.error("Track Order Error:", error);
+        res.status(500).json({ message: "Error tracking order" });
+    }
+});
+
+// Create Order Route
+app.post("/order", authenticateToken, async (req, res) => {
+    try {
+        const { name, email, phone, address, paymentMethod, items } = req.body;
+
+        // Insert the order into the orders table
+        const orderQuery = "INSERT INTO orders (name, email, phone, address, payment_method, order_date) VALUES (?, ?, ?, ?, ?, NOW())";
+        const result = await query(orderQuery, [name, email, phone, address, paymentMethod]);
+
+        const orderId = result.insertId;
+
+        // Insert the order items into the order_items table
+        const orderItemsQuery = "INSERT INTO order_items (order_id, food_item_id, quantity, price, total) VALUES ?";
+        const orderItemsValues = items.map(item => [orderId, item.foodItemId, item.quantity, item.price, item.total]);
+
+        await query(orderItemsQuery, [orderItemsValues]);
+
+        // Respond with the unique order ID
+        res.json({ orderId: orderId });
+    } catch (error) {
+        console.error("Error placing order:", error);
+        res.status(500).json({ message: "Error placing order" });
+    }
+});
+
+
+
+// Route fetch menu Items
+app.get("/menu", async (req, res) => {
+    try {
+        const [rows] = await query("SELECT * FROM menu_items");
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch menu items" });
+    }
+});
+
+
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} 🚀`);
 });
+
