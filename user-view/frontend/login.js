@@ -102,30 +102,4 @@ function updateWelcomeMessage() {
     }
 }
 
-// Fetching items from the menu
-async function fetchMenuItems() {
-    try {
-        const response = await fetch("http://localhost:5000/menu");
-        const menuItems = await response.json();
 
-        const menuContainer = document.getElementById("menu-container");
-        menuContainer.innerHTML = "";
-
-        menuItems.forEach(item => {
-            const menuItem = document.createElement("div");
-            menuItem.classList.add('restaurant-card');  // Add this line to match the search functionality
-            menuItem.innerHTML = `
-                <h3>${item.name}</h3>
-                <p>${item.description}</p>
-                <p>Price: $${item.price.toFixed(2)}</p>
-                ${item.image_url ? `<img src="${item.image_url}" alt="${item.name}" style="width:100px;">` : ""}
-            `;
-            menuContainer.appendChild(menuItem);
-        });
-
-        // Ensure search functionality works after the items are loaded
-        document.getElementById("searchInput").addEventListener("keyup", searchRestaurants);
-    } catch (error) {
-        console.error("Error fetching menu items:", error);
-    }
-}

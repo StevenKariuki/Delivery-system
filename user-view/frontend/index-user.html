@@ -127,26 +127,78 @@
         <div>
             <marquee behavior="scroll" direction="right"><i>Get the best meals you've ever seen.</i></marquee>
         </div>
+        <!-- DAtabase testing -->
+        <div id="menu-container">
+
+        </div>
+
         <div class="restaurant-list">
-            <div id="menu-container">
-                <!-- Dynamically added restaurant cards -->
+                <div class="restaurant-card">
+                <img src="images/pizza.png" alt="Pizza Mania">
+                <h3>Pizza Mania</h3>
+                <p>Delicious pizzas, made fresh.</p>
+                <a href="pizza.html" class="btn">View Menu</a>
             </div>
+            <div class="restaurant-card">
+                <img src="images/burger.png" alt="Burger Heaven">
+                <h3>Burger Heaven</h3>
+                <p>Juicy burgers, grilled to perfection.</p>
+                <a href="burger.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/sushi.png" alt="Sushi World">
+                <h3>Sushi World</h3>
+                <p>Fresh sushi, made to order.</p>
+                <a href="sushi.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/taco.png" alt="Taco Town">
+                <h3>Taco Town</h3>
+                <p>Authentic Mexican tacos.</p>
+                <a href="taco.html" class="btn">View Menu</a>
+            </div>
+        </div>
+        <div class="restaurant-list">
+            <div class="restaurant-card">
+                <img src="images/pasta.png" alt="Pasta Palace">
+                <h3>Pasta Palace</h3>
+                <p>Italian pasta dishes, made with love.</p>
+                <a href="pasta.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/BBQ.png" alt="BBQ Barn">
+                <h3>BBQ Barn</h3>
+                <p>Smoky BBQ, cooked to perfection.</p>
+                <a href="bbq.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/salad.png" alt="Salad Stop">
+                <h3>Salad Stop</h3>
+                <p>Fresh and healthy salads.</p>
+                <a href="salad.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/indian.png" alt="Indian Spice">
+                <h3>Indian Spice</h3>
+                <p>Authentic Indian cuisine.</p>
+                <a href="indiana.html" class="btn">View Menu</a>
+            </div>
+
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2024 FoodDelivery. <br> Developed by <i>Steven</i>. All rights reserved.</p>
-
+        <div class="footer-content"></div>
         <!-- Playstore icon -->
         <a href="https://play.google.com/store/apps/details?id=com.steven.fooddelivery" target="_blank">
             <img class="playstore-icon" src="images/play_store.png" alt="Playstore Icon">
         </a>
-
         <!-- Twitter Icon -->
         <a href="https://twitter.com/steven" target="_blank">
             <img class="twitter-icon" src="images/twitter_icon.png" alt="Twitter Icon">
         </a>
+
     </footer>
 
 <script src="login.js"></script>
@@ -157,6 +209,35 @@
         // Redirect to login page or perform other actions
         window.location.href = "login.html";
     }
-</script>
+   
+    /// Function to fetch and display menu items
+    async function fetchMenuItems() {
+    try {
+        const response = await fetch('http://localhost:3000/menu-items'); // Your backend URL
+        if (!response.ok) throw new Error('Failed to fetch menu items');
+        
+        const menuItems = await response.json();
+        
+        // Display items on the page
+        const menuContainer = document.getElementById('menu-container');
+        menuContainer.innerHTML = ''; // Clear existing content
+
+        menuItems.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('menu_items');
+        itemElement.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p>Price: $${item.price}</p>
+        `;
+        menuContainer.appendChild(itemElement);
+        });
+    } catch (error) {
+        console.error('Error fetching menu items:', error);
+    }
+    }
+    // Call the function to display the items when the page loads
+    window.onload = fetchMenuItems;
+  </script>
 </body>
 </html>

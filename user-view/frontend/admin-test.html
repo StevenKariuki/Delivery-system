@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin  Dashboard</title>
+</head>
+<body>
+    <form id="addProductForm">
+        <input type="text" id="productName" placeholder="Product Name" required>
+        <textarea id="productDescription" placeholder="Product Description"></textarea>
+        <input type="number" id="productPrice" placeholder="Price" required>
+        <input type="text" id="productImageUrl" placeholder="Image URL">
+        <button type="submit">Add Product</button>
+      </form>
+      
+      <script>
+        document.getElementById('addProductForm').addEventListener('submit', async (event) => {
+          event.preventDefault();
+      
+          const name = document.getElementById('productName').value;
+          const description = document.getElementById('productDescription').value;
+          const price = parseFloat(document.getElementById('productPrice').value);
+          const imageUrl = document.getElementById('productImageUrl').value;
+      
+          const response = await fetch('http://localhost:3000/api/add-product', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, description, price, image_url: imageUrl })
+          });
+      
+          if (response.ok) {
+            alert('Product added successfully!');
+          } else {
+            alert('Failed to add product');
+          }
+        });
+      </script>
+      
+</body>
+</html>

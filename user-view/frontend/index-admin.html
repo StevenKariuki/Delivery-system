@@ -3,403 +3,293 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Manager Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Admin Dashboard</title>
   <style>
-      /* Global Styles */
-      body {
-      font-family: 'Roboto', sans-serif;
+    /* Add styles here */
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f6fa;
-      color: #333;
     }
 
-    h1, h2, h3 {
-      margin: 0;
-    }
-
-    a {
-      text-decoration: none;
-      color: #007bff;
-      transition: 0.3s;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Header */
-    header {
-      background-color: #007bff;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 1.8rem;
-    }
-
-    header nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    header nav a {
-      color: white;
-      font-weight: 500;
-    }
-
-    header .logout-btn {
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s ease;
-    }
-
-    header .logout-btn:hover {
-      background-color: #c82333;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background-color: #343a40;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      margin-top: 70px; 
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-
-    .sidebar a {
-      color: white;
-      display: block;
-      padding: 0.8rem 1rem;
-      border-radius: 5px;
-      margin-bottom: 10px;
-      transition: 0.3s ease;
-    }
-
-    .sidebar a:hover {
-      background-color: #495057;
-    }
-
-    /* Main Content */
-    .content {
-      margin-left: 270px;
-      padding: 2rem;
-    }
-
-    .section {
-      background-color: white;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .section h2 {
-      font-size: 1.6rem;
-      border-bottom: 2px solid #e9ecef;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .section p {
-      color: #6c757d;
-    }
-
-    /* Button Style */
-    .btn {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      margin-top: 1rem;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #0056b3;
-    }
-
-    .btn-danger {
-      background-color: #dc3545;
-    }
-
-    .btn-danger:hover {
-      background-color: #c82333;
-    }
-
-    /* Table Styles */
-    .table {
+    table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
+      margin-bottom: 20px;
     }
 
-    .table th, .table td {
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
       text-align: left;
-      border: 1px solid #dee2e6;
-      padding: 12px;
     }
 
-    .table th {
-      background-color: #f8f9fa;
+    th {
+      background: #f4f4f4;
       font-weight: bold;
     }
 
-    .table td button {
-      padding: 0.5rem 1rem;
+    .btn {
+      padding: 5px 10px;
+      border-radius: 4px;
       border: none;
-      border-radius: 5px;
-      color: white;
       cursor: pointer;
     }
 
-    .success {
-      background-color: #28a745;
-    }
-
-    .success:hover {
-      background-color: #218838;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #007bff;
+    .btn.success {
+      background-color: #4CAF50;
       color: white;
     }
 
-    /* Responsive Design */
-    @media screen and (max-width: 768px) {
-      .sidebar {
-        position: static;
-        width: auto;
-        height: auto;
-      }
+    .btn-danger {
+      background-color: #f44336;
+      color: white;
+    }
 
-      .content {
-        margin-left: 0;
-      }
+    .btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      width: 400px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .modal-header {
+      font-size: 18px;
+    }
+
+    .modal-footer {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-   <!-- Header -->
-   <header>
-    <h1>Manager Dashboard</h1>
-    <nav>
-      <a href="#users">Users</a>
-      <a href="#products">Products</a>
-      <a href="#orders">Orders</a>
-    </nav>
-    <button class="logout-btn" onclick="logout()">Log Out</button>
-  </header>
+  <h1>Admin Dashboard</h1>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <a href="#users">User Management</a>
-    <a href="#products">Product Management</a>
-    <a href="#orders">Order Management</a>
-  </div>
+  <!-- User Table -->
+  <h2>Users</h2>
+  <input id="user-search" onkeyup="searchTable('user')" placeholder="Search Users">
+  <table id="user-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JavaScript -->
+    </tbody>
+  </table>
+  <button class="btn success" onclick="openAddModal('user')">Add User</button>
 
-  <!-- Main Content -->
-  <div class="content">
-    <!-- User Management -->
-    <section id="users" class="section">
-      <h2>User Management</h2>
-      <p>Manage users, their roles, and pending user requests.</p>
-      <table class="table" id="user-table">
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button class="btn" onclick="openAddModal('user')">Add New User</button>
-    </section>
+  <!-- Product Table -->
+  <h2>Products</h2>
+  <input id="product-search" onkeyup="searchTable('product')" placeholder="Search Products">
+  <table id="product-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JavaScript -->
+    </tbody>
+  </table>
+  <button class="btn success" onclick="openAddModal('product')">Add Product</button>
 
-    <!-- Product Management -->
-    <section id="products" class="section">
-      <h2>Product Management</h2>
-      <p>Add, edit, or remove items from the menu.</p>
-      <table class="table" id="product-table">
-        <thead>
-          <tr>
-            <th>Product ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <button class="btn" onclick="openAddModal('product')">Add New Product</button>
-    </section>
+  <!-- Order Table -->
+  <h2>Orders</h2>
+  <table id="order-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Populated by JavaScript -->
+    </tbody>
+  </table>
 
-    <!-- Order Management -->
-    <section id="orders" class="section">
-      <h2>Order Management</h2>
-      <p>View, update, or manage customer orders.</p>
-      <table class="table" id="order-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </section>
-  </div>
-
-  <!-- Modal for Adding/Editing -->
-  <div id="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 2rem; box-shadow: 0 0 15px rgba(0,0,0,0.3); border-radius: 10px;">
-    <h3 id="modal-title">Modal Title</h3>
-    <form id="modal-form" onsubmit="handleModalSubmit(event)">
-      <input type="hidden" id="entity-type" />
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="modal-name" required />
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-title"></h3>
       </div>
-      <div id="price-field" style="display: none;">
-        <label for="price">Price:</label>
-        <input type="number" id="modal-price" step="0.01" />
-      </div>
-      <button type="submit" class="btn">Submit</button>
-      <button type="button" class="btn-danger" onclick="closeModal()">Cancel</button>
-    </form>
+      <form id="modal-form" onsubmit="handleModalSubmit(event)">
+        <div class="form-group">
+          <label for="modal-name">Name:</label>
+          <input type="text" id="modal-name" required>
+        </div>
+        <div class="form-group" id="role-field">
+          <label for="modal-role">Role:</label>
+          <input type="text" id="modal-role">
+        </div>
+        <div class="form-group" id="price-field">
+          <label for="modal-price">Price:</label>
+          <input type="number" id="modal-price" step="0.01">
+        </div>
+        <input type="hidden" id="entity-type">
+        <div class="modal-footer">
+          <button class="btn success" type="submit">Submit</button>
+          <button class="btn-danger" type="button" onclick="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 Manager Dashboard</p>
-  </footer>
-
+  
   <script>
-        // Initial Data Objects
-        let users = [{ id: "001", name: "John Doe", role: "Customer" }, { id: "002", name: "Jane Smith", role: "Admin" }];
-    let products = [{ id: "P001", name: "Product 1", price: "$10" }, { id: "P002", name: "Product 2", price: "$20" }];
-    let orders = [{ id: "O001", customer: "John Doe", status: "Pending" }];
+    let users = [{ id: "001", name: "John Doe", role: "Customer" }];
+    let products = [{ id: "101", name: "Product 1", price: 20 }];
+    let orders = [{ id: "5001", customer: "John Doe", status: "Pending" }];
 
-    // Reusable Render Functions
-    const renderTable = (tableId, data, actions) => {
-      const table = document.querySelector(`#${tableId} tbody`);
-      table.innerHTML = data.map(row => `
-        <tr>
-          ${Object.values(row).map(value => `<td>${value}</td>`).join('')}
-          <td>${actions(row)}</td>
-        </tr>
-      `).join('');
-    };
+    // Rendering Function
+    function renderTable(type) {
+      let table = document.getElementById(`${type}-table`);
+      let data = window[type + 's'];
+      let tbody = table.querySelector('tbody');
+      tbody.innerHTML = '';
+      data.forEach(item => {
+        let row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.id}</td>
+          <td>${item.name}</td>
+          <td>${type === 'user' ? item.role : type === 'product' ? item.price : item.status}</td>
+          <td>
+            <button class="btn success" onclick="openEditModal('${type}', '${item.id}')">Edit</button>
+            <button class="btn-danger" onclick="removeItem('${type}', '${item.id}')">Remove</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
 
-    const renderUsers = () => renderTable('user-table', users, user =>
-      `<button class="btn-danger" onclick="confirmRemove('user', '${user.id}')">Remove</button>`
-    );
-
-    const renderProducts = () => renderTable('product-table', products, product =>
-      `<button class="btn" onclick="openEditModal('product', '${product.id}')">Edit</button>
-       <button class="btn-danger" onclick="confirmRemove('product', '${product.id}')">Remove</button>`
-    );
-
-    const renderOrders = () => renderTable('order-table', orders, order =>
-      `<button class="btn success" onclick="updateOrderStatus('${order.id}')">${order.status === 'Pending' ? 'Mark as Completed' : 'Completed'}</button>`
-    );
-
-    // Modal for Adding/Editing Entities
-    const openAddModal = (type) => {
-      document.querySelector("#entity-type").value = type;
-      document.querySelector("#modal-title").textContent = `Add New ${type}`;
-      document.getElementById("price-field").style.display = type === 'product' ? 'block' : 'none';
-      document.getElementById("modal").style.display = 'block';
-    };
-
-    const openEditModal = (type, id) => {
-      const entity = type === 'user' ? users.find(user => user.id === id) : products.find(product => product.id === id);
-      document.querySelector("#modal-title").textContent = `Edit ${type}`;
-      document.querySelector("#entity-type").value = type;
-      document.querySelector("#modal-name").value = entity.name;
-      if (type === 'product') {
-        document.querySelector("#modal-price").value = entity.price.replace('$', '');
-      }
-      document.getElementById("price-field").style.display = type === 'product' ? 'block' : 'none';
-      document.getElementById("modal").style.display = 'block';
-    };
-
-    const closeModal = () => {
-      document.getElementById("modal").style.display = 'none';
-    };
-
-    const handleModalSubmit = (event) => {
-      event.preventDefault();
-      const type = document.querySelector("#entity-type").value;
-      const name = document.querySelector("#modal-name").value;
+    // Open Add Modal
+    function openAddModal(type) {
+      let modal = document.getElementById('modal');
+      let title = document.getElementById('modal-title');
+      let nameField = document.getElementById('modal-name');
+      let roleField = document.getElementById('role-field');
+      let priceField = document.getElementById('price-field');
+      title.textContent = `Add New ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+      document.getElementById('modal-form').reset();
+      document.getElementById('entity-type').value = type;
       if (type === 'user') {
-        users.push({ id: `00${users.length + 1}`, name, role: "Customer" });
-        renderUsers();
+        roleField.style.display = 'block';
+        priceField.style.display = 'none';
       } else if (type === 'product') {
-        const price = `$${parseFloat(document.querySelector("#modal-price").value).toFixed(2)}`;
-        products.push({ id: `P00${products.length + 1}`, name, price });
-        renderProducts();
+        roleField.style.display = 'none';
+        priceField.style.display = 'block';
+      } else {
+        roleField.style.display = 'none';
+        priceField.style.display = 'none';
       }
+      modal.style.display = 'block';
+    }
+
+    // Open Edit Modal
+    function openEditModal(type, id) {
+      let item = window[type + 's'].find(item => item.id === id);
+      let modal = document.getElementById('modal');
+      let title = document.getElementById('modal-title');
+      let nameField = document.getElementById('modal-name');
+      let roleField = document.getElementById('role-field');
+      let priceField = document.getElementById('price-field');
+      title.textContent = `Edit ${type.charAt(0).toUpperCase() + type.slice(1)}`;
+      nameField.value = item.name;
+      document.getElementById('entity-type').value = type;
+      if (type === 'user') {
+        roleField.style.display = 'block';
+        priceField.style.display = 'none';
+        document.getElementById('modal-role').value = item.role;
+      } else if (type === 'product') {
+        roleField.style.display = 'none';
+        priceField.style.display = 'block';
+        document.getElementById('modal-price').value = item.price;
+      }
+      modal.style.display = 'block';
+    }
+
+    // Close Modal
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Handle Modal Form Submit
+    function handleModalSubmit(event) {
+      event.preventDefault();
+      let type = document.getElementById('entity-type').value;
+      let name = document.getElementById('modal-name').value;
+      let id = Date.now().toString();
+      if (type === 'user') {
+        let role = document.getElementById('modal-role').value;
+        users.push({ id, name, role });
+      } else if (type === 'product') {
+        let price = parseFloat(document.getElementById('modal-price').value);
+        products.push({ id, name, price });
+      }
+      renderTable(type);
       closeModal();
-    };
+    }
 
-    // Remove Entities
-    const confirmRemove = (type, id) => {
-      if (confirm(`Are you sure you want to remove this ${type}?`)) {
-        if (type === 'user') {
-          users = users.filter(user => user.id !== id);
-          renderUsers();
-        } else if (type === 'product') {
-          products = products.filter(product => product.id !== id);
-          renderProducts();
-        }
-      }
-    };
-    // Log Out Function
-    const logout = () => {
-      // Perform any necessary cleanup or state reset
-      alert("You have been logged out.");
-      // Redirect to login page or home page
-      window.location.href = "login-admin.html";
-    };
+    // Remove Item
+    function removeItem(type, id) {
+      window[type + 's'] = window[type + 's'].filter(item => item.id !== id);
+      renderTable(type);
+    }
 
-    // Update Order Status
-    const updateOrderStatus = (id) => {
-      orders = orders.map(order => order.id === id ? { ...order, status: 'Completed' } : order);
-      renderOrders();
-    };
+    // Search Function
+    function searchTable(type) {
+      let searchInput = document.getElementById(`${type}-search`).value.toLowerCase();
+      let filteredData = window[type + 's'].filter(item => item.name.toLowerCase().includes(searchInput));
+      window[type + 's'] = filteredData;
+      renderTable(type);
+    }
 
     // Initial Render
-    renderUsers();
-    renderProducts();
-    renderOrders();
+    renderTable('user');
+    renderTable('product');
+    renderTable('order');
+
   </script>
 </body>
 </html>
