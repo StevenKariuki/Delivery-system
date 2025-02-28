@@ -21,6 +21,8 @@ function addToCart(itemId, quantity) {
       { id: 2, name: "Pepperoni Pizza", price: 9.99 },
       { id: 3, name: "Vegetarian Pizza", price: 7.99 },
       { id: 4, name: "BBQ Chicken Pizza", price: 6.99 }
+      { id: 5, name: "Mushroom Pizza", price: 10.99 },
+      { id: 6, name: "Hawaiian Pizza", price: 11.99 }
   ];
 
   // Find the item by its ID

@@ -203,6 +203,7 @@
             </ul>
         </nav>
     </header>
+    
     <button class="back-button" onclick="goBack()">Back to Home</button>
 
     <!-- Main - Profile Section -->
@@ -218,9 +219,11 @@
 
 
         <!-- Order History Section -->
-        <div class="order-history">
-            <h2>Order History</h2>
-            <div id="orderHistoryContainer"></div>
+        <div class="container">
+            <h2>Your Order History</h2>
+            <div id="order-history" class="order-history">
+                <!-- Orders will be loaded here -->
+            </div>
         </div>
     </main>
 
@@ -248,12 +251,43 @@
             document.getElementById("userEmail").textContent = `Email: ${userEmail}`;
             document.getElementById("memberSince").textContent = `Member since: ${memberSince}`;
 
-            // Sample order data (replace with actual data if available)
-            const orders = [
-                { image: "images/pizza.png", name: "Pizza Mania", date: "5th Oct 2023", price: "$12.99" },
-                { image: "images/burger.png", name: "Burger Deluxe", date: "10th Jan 2023", price: "$9.99" }
-            ];
+            // Function to load order history
+        function loadOrderHistory() {
+            const orderHistoryDiv = document.getElementById('order-history');
+            orderHistoryDiv.innerHTML = '';
 
+            let orders = [];
+            // Retrieve all stored orders
+            for (let key in localStorage) {
+                if (key.startsWith('order-')) {
+                    orders.push(JSON.parse(localStorage.getItem(key)));
+                }
+            }
+
+            if (orders.length === 0) {
+                orderHistoryDiv.innerHTML = "<p>No previous orders found.</p>";
+                return;
+            }
+
+            orders.forEach(order => {
+                const orderElement = document.createElement('div');
+                orderElement.classList.add('order-item');
+                orderElement.innerHTML = `
+                    <p class="order-id">Order ID: ${order.orderId}</p>
+                    <p>Name: ${order.name}</p>
+                    <p>Email: ${order.email}</p>
+                    <p>Phone: ${order.phone}</p>
+                    <p>Address: ${order.address}</p>
+                    <p>Payment Method: ${order.paymentMethod}</p>
+                    <p>Status: <strong>${order.status}</strong></p>
+                    <hr>
+                `;
+                orderHistoryDiv.appendChild(orderElement);
+            });
+        }
+
+        // Load order history when the page loads
+        window.onload = loadOrderHistory;
             const orderHistoryContainer = document.getElementById("orderHistoryContainer");
             orders.forEach(order => {
                 const orderCard = `

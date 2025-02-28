@@ -49,17 +49,34 @@ app.get("/", (req, res) => {
 });
 
 // Middleware to Authenticate Token
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.header("Authorization");
-    if (!authHeader) return res.status(401).json({ error: "Access denied" });
+// const authenticateToken = (req, res, next) => {
+//     const authHeader = req.header("Authorization");
+//     if (!authHeader) return res.status(401).json({ error: "Access denied" });
 
-    const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
-    jwt.verify(token, jwtSecret, (err, user) => {
-        if (err) return res.status(403).json({ error: "Invalid token" });
+//     const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
+//     jwt.verify(token, jwtSecret, (err, user) => {
+//         if (err) return res.status(403).json({ error: "Invalid token" });
+//         req.user = user;
+//         next();
+//     });
+// };
+
+const jwt = require("jsonwebtoken");
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) return res.status(403).json({ message: "Access denied. No token provided!" });
+
+    const token = authHeader.split(" ")[1]; // Get the token after "Bearer "
+    if (!token) return res.status(403).json({ message: "Access denied. Invalid token format!" });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "Access denied. Invalid or expired token!" });
         req.user = user;
         next();
     });
-};
+}
+
 
 // Get all users
 app.get("/users", async (req, res) => {
@@ -409,7 +426,7 @@ router.post('/api/add-product', (req, res) => {
     });
 });
 
-// route to get al menu Items
+// route to get all menu Items
 router.get('/menu_items', (req, res) => {
     const query = 'SELECT * FROM menu_items'; // Adjust table name if different
     db.query(query, (error, results) => {
@@ -420,6 +437,46 @@ router.get('/menu_items', (req, res) => {
       }
     });
   });
+
+  // Route to send a message
+app.post("/api/chat/send", authenticateToken, async (req, res) => {
+    try {
+        const { receiverId, message } = req.body;
+        const senderId = req.user.id;
+
+        if (!receiverId || !message) {
+            return res.status(400).json({ message: "Receiver ID and message are required!" });
+        }
+
+        await query(
+            "INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)",
+            [senderId, receiverId, message]
+        );
+
+        res.json({ message: "Message sent successfully!" });
+    } catch (error) {
+        console.error("Chat Send Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
+});
+
+// Route to fetch chat history between two users
+app.get("/api/chat/history/:receiverId", authenticateToken, async (req, res) => {
+    try {
+        const senderId = req.user.id;
+        const { receiverId } = req.params;
+
+        const messages = await query(
+            "SELECT sender_id, receiver_id, message, timestamp FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY timestamp ASC",
+            [senderId, receiverId, receiverId, senderId]
+        );
+
+        res.json(messages);
+    } catch (error) {
+        console.error("Chat History Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
+});
 
 
 module.exports = router;

@@ -86,6 +86,75 @@
             margin-top: 20px;
             margin-left: 10px;
         }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        #searchInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(82, 18, 18);
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .chat-popup textarea {
+            width: 100%;
+            height: 80px;
+            padding: 5px;
+        }
+
+        .chat-popup .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -187,22 +256,99 @@
         </div>
     </section>
 
+  
+   <!-- Chat Button -->
+   <button class="chat-button" onclick="toggleChat()">Chat</button>
+
+   <!-- Chat Pop-up -->
+   <div class="chat-popup" id="chatPopup">
+       <div class="chat-messages" id="chatMessages"></div>
+       <textarea id="chatInput" placeholder="Type a message..."></textarea>
+       <button onclick="sendMessage()">Send</button>
+   </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content"></div>
-        <!-- Playstore icon -->
-        <a href="https://play.google.com/store/apps/details?id=com.steven.fooddelivery" target="_blank">
-            <img class="playstore-icon" src="images/play_store.png" alt="Playstore Icon">
-        </a>
-        <!-- Twitter Icon -->
-        <a href="https://twitter.com/steven" target="_blank">
-            <img class="twitter-icon" src="images/twitter_icon.png" alt="Twitter Icon">
-        </a>
-
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>We are dedicated to delivering the best food from your favorite restaurants straight to your door.</p>
+            </div>
+            <div class="footer-section"></div>
+                <h4>Contact Us</h4>
+                <p>Email: support@fooddelivery.com</p>
+                <p>Phone: +123 456 7890</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <!-- Playstore icon -->
+                <a href="https://play.google.com/store/apps/details?id=com.steven.fooddelivery" target="_blank">
+                    <img class="playstore-icon" src="images/play_store.png" alt="Playstore Icon">
+                </a>
+                <!-- Twitter Icon -->
+                <a href="https://twitter.com/steven" target="_blank">
+                    <img class="twitter-icon" src="images/twitter_icon.png" alt="Twitter Icon">
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Vi_brant's FoodDelivery. All rights reserved.</p>
+        </div>
     </footer>
 
 <script src="login.js"></script>
 <script>
+    const socket = io("http://localhost:3000");
+
+document.getElementById("openChat").addEventListener("click", () => {
+    const chatPopup = document.getElementById("chatPopup");
+    chatPopup.style.display = chatPopup.style.display === "none" ? "block" : "none";
+});
+
+// Listen for messages
+socket.on("receiveMessage", (data) => {
+    displayMessage(data);
+});
+
+// Send message
+document.getElementById("sendChat").addEventListener("click", () => {
+    const input = document.getElementById("chatInput");
+    const message = input.value.trim();
+
+    if (message !== "") {
+        const data = { user: "Customer", text: message };
+        socket.emit("sendMessage", data);
+        input.value = "";
+    }
+});
+
+// Display messages
+function displayMessage(data) {
+    const chatMessages = document.getElementById("chatMessages");
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+    function toggleChat() {
+            const chatPopup = document.getElementById("chatPopup");
+            chatPopup.style.display = chatPopup.style.display === "block" ? "none" : "block";
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById("chatInput");
+            const chatMessages = document.getElementById("chatMessages");
+            if (chatInput.value.trim() !== "") {
+                const message = document.createElement("p");
+                message.textContent = chatInput.value;
+                chatMessages.appendChild(message);
+                chatInput.value = "";
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
     function logout() {
         // Perform logout operations here
         alert("Logged out successfully!");
