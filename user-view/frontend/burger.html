@@ -37,15 +37,17 @@
     button:hover {
         background-color: rgb(182, 113, 113);
     }
-      @keyframes logoAnimation {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2.8); }
-      100% { transform: scale(1); }
-    }
+     
 
     .logo {
       animation: logoAnimation 2s infinite;
     }
+    @keyframes logoAnimation {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
     .menu-nav{
         text-decoration: none;
         color: white;
@@ -53,7 +55,40 @@
         border: 1px solid;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 2s ease-in-out;
     }
+    @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .menu-item {
+            animation: slideIn 1s ease-out;
+        }
+
+        .btn {
+            animation: bounce 3s infinite;
+        }
+        .btn:hover{
+            animation-play-state: paused;
+        }
+
+        @keyframes slideIn {
+            0% {
+              opacity: 0;
+               transform: translateX(-100%); 
+              }
+            100% {
+              opacity: 1; 
+              transform: translateX(0); 
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
 
     /* Styles for the Back button */
     .back-button {
@@ -98,6 +133,8 @@
     <button class="back-button" onclick="goBack()">Back to Home</button>
 
     <a class="cta" href="cart.html">Cart (0)</a>
+    
+
   </header>
 
   <div class="search-container">
@@ -116,7 +153,7 @@
         <h2>Classic Cheeseburger</h2>
         <p>A mouthwatering cheeseburger with a juicy beef patty, melted cheese, lettuce, tomato, and pickles.</p>
         <span class="price">$9.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(1, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 2 -->
@@ -125,7 +162,7 @@
         <h2>Bacon Burger</h2>
         <p>A delicious beef patty topped with crispy bacon, melted cheese, lettuce, tomato, and special sauce.</p>
         <span class="price">$11.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(2, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 3 -->
@@ -134,7 +171,7 @@
         <h2>Veggie Burger</h2>
         <p>A tasty veggie patty with fresh vegetables, avocado, and creamy sauce, all nestled in a soft bun.</p>
         <span class="price">$8.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(3, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 4 -->
@@ -143,7 +180,7 @@
         <h2>BBQ Burger</h2>
         <p>A smoky BBQ burger with tender beef, caramelized onions, cheddar cheese, and tangy BBQ sauce.</p>
         <span class="price">$10.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(4, 1)">Add to Cart</button>
       </div>
     </div>
 
@@ -154,7 +191,7 @@
         <h2>Spicy Jalapeño Burger</h2>
         <p>A fiery burger with spicy jalapeños, pepper jack cheese, and a kick of hot sauce for the bold-hearted.</p>
         <span class="price">$9.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(5, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 6 -->
@@ -163,7 +200,7 @@
         <h2>Mushroom Swiss Burger</h2>
         <p>A rich and savory burger with sautéed mushrooms, Swiss cheese, and creamy mayo.</p>
         <span class="price">$12.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(6, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 7 -->
@@ -172,7 +209,7 @@
         <h2>Double Cheeseburger</h2>
         <p>Double the beef, double the cheese – a burger lover's dream come true!</p>
         <span class="price">$13.99</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(7, 1)">Add to Cart</button>
       </div>
 
       <!-- Menu Item 8 -->
@@ -181,7 +218,7 @@
         <h2>Chicken Burger</h2>
         <p>A crispy chicken patty with fresh lettuce, tomato, and mayo on a soft bun.</p>
         <span class="price">$8.49</span>
-        <button class="btn">Add to Cart</button>
+        <button class="btn" onclick="addToCart(8, 1)">Add to Cart</button>
       </div>
     </div>
   </section>
@@ -190,6 +227,7 @@
   <footer>
     <p>© 2023 BurgerPalace. All rights reserved. Powered by Steven's Deliciousness!</p>
   </footer>
+  <script src="scriptburger.js"></script>
   <script>
     function goBack(){
       window.location.href = "index-user.html";
@@ -217,6 +255,34 @@
       });
     }
 
+    // Add Item to Cart Function
+    // function addToCart(foodItemId, quantity) {
+    //         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    //         const existingItem = cart.find(item => item.foodItemId === foodItemId);
+
+    //         if (existingItem) {
+    //             existingItem.quantity += quantity;
+    //         } else {
+    //             cart.push({ foodItemId, quantity });
+    //         }
+
+    //         localStorage.setItem('cart', JSON.stringify(cart));
+    //         updateCartUI();
+    //         alert('Item added to cart');
+    //     }
+
+         // Function to update Cart UI
+         function updateCartUI() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartIcon = document.querySelector('.cta');
+            cartIcon.textContent = `Cart (${cartCount})`;
+        }
+
+         // Call to initialize cart UI
+         window.onload = function() {
+            updateCartUI();
+        };
   </script>
 </body>
 </html>

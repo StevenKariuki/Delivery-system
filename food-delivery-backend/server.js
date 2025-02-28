@@ -4,12 +4,11 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-
+const router = express.Router();
 
 const app = express();
 app.use(cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "http://127.0.0.1:5501",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -50,17 +49,34 @@ app.get("/", (req, res) => {
 });
 
 // Middleware to Authenticate Token
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.header("Authorization");
-    if (!authHeader) return res.status(401).json({ error: "Access denied" });
+// const authenticateToken = (req, res, next) => {
+//     const authHeader = req.header("Authorization");
+//     if (!authHeader) return res.status(401).json({ error: "Access denied" });
 
-    const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
-    jwt.verify(token, jwtSecret, (err, user) => {
-        if (err) return res.status(403).json({ error: "Invalid token" });
+//     const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
+//     jwt.verify(token, jwtSecret, (err, user) => {
+//         if (err) return res.status(403).json({ error: "Invalid token" });
+//         req.user = user;
+//         next();
+//     });
+// };
+
+const jwt = require("jsonwebtoken");
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) return res.status(403).json({ message: "Access denied. No token provided!" });
+
+    const token = authHeader.split(" ")[1]; // Get the token after "Bearer "
+    if (!token) return res.status(403).json({ message: "Access denied. Invalid token format!" });
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.status(403).json({ message: "Access denied. Invalid or expired token!" });
         req.user = user;
         next();
     });
-};
+}
+
 
 // Get all users
 app.get("/users", async (req, res) => {
@@ -283,15 +299,15 @@ app.get("/api/cart", authenticateToken, async (req, res) => {
     }
 });
 
-// Route to Place Order
+// Route to Place Order (Improved total amount calculation)
 app.post("/api/place-order", authenticateToken, async (req, res) => {
     try {
-        const userId = req.user.id;  // Extract user id from the token
+        const userId = req.user.id; // Extract user id from the token
         const { paymentMethod, deliveryAddress } = req.body;
 
         // Check if cart is empty
         const cartItems = await query(
-            "SELECT * FROM cart WHERE user_id = ?",
+            "SELECT cart.food_item_id, cart.quantity, menu_items.price FROM cart JOIN menu_items ON cart.food_item_id = menu_items.id WHERE cart.user_id = ?",
             [userId]
         );
 
@@ -299,9 +315,11 @@ app.post("/api/place-order", authenticateToken, async (req, res) => {
             return res.status(400).json({ message: "Cart is empty. Add items to cart before placing an order." });
         }
 
-        // Create the order entry
-        const orderDate = new Date().toISOString().slice(0, 19).replace("T", " "); // Format date
+        // Calculate total amount
         const totalAmount = cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+
+        // Create the order entry
+        const orderDate = new Date().toISOString().slice(0, 19).replace("T", " ");
 
         // Insert order into the orders table
         const result = await query(
@@ -385,18 +403,83 @@ app.post("/order", authenticateToken, async (req, res) => {
     }
 });
 
+// Endpoint to fetch all products
+router.get('/api/products', (_, res) => {
+    const query = 'SELECT * FROM products';
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to fetch products' });
+        }
+        res.json(results);
+    });
+});
 
+// API endpoint to add a product
+router.post('/api/add-product', (req, res) => {
+    const { name, description, price, image_url } = req.body;
+    const query = 'INSERT INTO products (name, description, price, image_url) VALUES (?, ?, ?, ?)';
+    db.query(query, [name, description, price, image_url], (err, _) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to add product' });
+        }
+        res.status(201).json({ message: 'Product added successfully' });
+    });
+});
 
-// Route fetch menu Items
-app.get("/menu", async (req, res) => {
+// route to get all menu Items
+router.get('/menu_items', (req, res) => {
+    const query = 'SELECT * FROM menu_items'; // Adjust table name if different
+    db.query(query, (error, results) => {
+      if (error) {
+        res.status(500).json({ error: 'Failed to fetch menu items' });
+      } else {
+        res.json(results);
+      }
+    });
+  });
+
+  // Route to send a message
+app.post("/api/chat/send", authenticateToken, async (req, res) => {
     try {
-        const [rows] = await query("SELECT * FROM menu_items");
-        res.json(rows);
+        const { receiverId, message } = req.body;
+        const senderId = req.user.id;
+
+        if (!receiverId || !message) {
+            return res.status(400).json({ message: "Receiver ID and message are required!" });
+        }
+
+        await query(
+            "INSERT INTO messages (sender_id, receiver_id, message) VALUES (?, ?, ?)",
+            [senderId, receiverId, message]
+        );
+
+        res.json({ message: "Message sent successfully!" });
     } catch (error) {
-        res.status(500).json({ error: "Failed to fetch menu items" });
+        console.error("Chat Send Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
     }
 });
 
+// Route to fetch chat history between two users
+app.get("/api/chat/history/:receiverId", authenticateToken, async (req, res) => {
+    try {
+        const senderId = req.user.id;
+        const { receiverId } = req.params;
+
+        const messages = await query(
+            "SELECT sender_id, receiver_id, message, timestamp FROM messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY timestamp ASC",
+            [senderId, receiverId, receiverId, senderId]
+        );
+
+        res.json(messages);
+    } catch (error) {
+        console.error("Chat History Error:", error);
+        res.status(500).json({ message: "Server error, please try again!" });
+    }
+});
+
+
+module.exports = router;
 
 // Start Server
 const PORT = process.env.PORT || 5000;

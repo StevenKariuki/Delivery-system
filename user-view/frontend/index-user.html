@@ -86,6 +86,75 @@
             margin-top: 20px;
             margin-left: 10px;
         }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        #searchInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: rgb(82, 18, 18);
+        }
+
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff4500;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .chat-popup textarea {
+            width: 100%;
+            height: 80px;
+            padding: 5px;
+        }
+
+        .chat-popup .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -127,36 +196,194 @@
         <div>
             <marquee behavior="scroll" direction="right"><i>Get the best meals you've ever seen.</i></marquee>
         </div>
+        <!-- DAtabase testing -->
+        <div id="menu-container">
+
+        </div>
+
         <div class="restaurant-list">
-            <div id="menu-container">
-                <!-- Dynamically added restaurant cards -->
+                <div class="restaurant-card">
+                <img src="images/pizza.png" alt="Pizza Mania">
+                <h3>Pizza Mania</h3>
+                <p>Delicious pizzas, made fresh.</p>
+                <a href="pizza.html" class="btn">View Menu</a>
             </div>
+            <div class="restaurant-card">
+                <img src="images/burger.png" alt="Burger Heaven">
+                <h3>Burger Heaven</h3>
+                <p>Juicy burgers, grilled to perfection.</p>
+                <a href="burger.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/sushi.png" alt="Sushi World">
+                <h3>Sushi World</h3>
+                <p>Fresh sushi, made to order.</p>
+                <a href="sushi.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/taco.png" alt="Taco Town">
+                <h3>Taco Town</h3>
+                <p>Authentic Mexican tacos.</p>
+                <a href="taco.html" class="btn">View Menu</a>
+            </div>
+        </div>
+        <div class="restaurant-list">
+            <div class="restaurant-card">
+                <img src="images/pasta.png" alt="Pasta Palace">
+                <h3>Pasta Palace</h3>
+                <p>Italian pasta dishes, made with love.</p>
+                <a href="pasta.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/BBQ.png" alt="BBQ Barn">
+                <h3>BBQ Barn</h3>
+                <p>Smoky BBQ, cooked to perfection.</p>
+                <a href="bbq.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/salad.png" alt="Salad Stop">
+                <h3>Salad Stop</h3>
+                <p>Fresh and healthy salads.</p>
+                <a href="salad.html" class="btn">View Menu</a>
+            </div>
+            <div class="restaurant-card">
+                <img src="images/indian.png" alt="Indian Spice">
+                <h3>Indian Spice</h3>
+                <p>Authentic Indian cuisine.</p>
+                <a href="indiana.html" class="btn">View Menu</a>
+            </div>
+
         </div>
     </section>
 
+  
+   <!-- Chat Button -->
+   <button class="chat-button" onclick="toggleChat()">Chat</button>
+
+   <!-- Chat Pop-up -->
+   <div class="chat-popup" id="chatPopup">
+       <div class="chat-messages" id="chatMessages"></div>
+       <textarea id="chatInput" placeholder="Type a message..."></textarea>
+       <button onclick="sendMessage()">Send</button>
+   </div>
+
     <!-- Footer -->
     <footer>
-        <p>© 2024 FoodDelivery. <br> Developed by <i>Steven</i>. All rights reserved.</p>
-
-        <!-- Playstore icon -->
-        <a href="https://play.google.com/store/apps/details?id=com.steven.fooddelivery" target="_blank">
-            <img class="playstore-icon" src="images/play_store.png" alt="Playstore Icon">
-        </a>
-
-        <!-- Twitter Icon -->
-        <a href="https://twitter.com/steven" target="_blank">
-            <img class="twitter-icon" src="images/twitter_icon.png" alt="Twitter Icon">
-        </a>
+        <div class="footer-content"></div>
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>We are dedicated to delivering the best food from your favorite restaurants straight to your door.</p>
+            </div>
+            <div class="footer-section"></div>
+                <h4>Contact Us</h4>
+                <p>Email: support@fooddelivery.com</p>
+                <p>Phone: +123 456 7890</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <!-- Playstore icon -->
+                <a href="https://play.google.com/store/apps/details?id=com.steven.fooddelivery" target="_blank">
+                    <img class="playstore-icon" src="images/play_store.png" alt="Playstore Icon">
+                </a>
+                <!-- Twitter Icon -->
+                <a href="https://twitter.com/steven" target="_blank">
+                    <img class="twitter-icon" src="images/twitter_icon.png" alt="Twitter Icon">
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Vi_brant's FoodDelivery. All rights reserved.</p>
+        </div>
     </footer>
 
 <script src="login.js"></script>
 <script>
+    const socket = io("http://localhost:3000");
+
+document.getElementById("openChat").addEventListener("click", () => {
+    const chatPopup = document.getElementById("chatPopup");
+    chatPopup.style.display = chatPopup.style.display === "none" ? "block" : "none";
+});
+
+// Listen for messages
+socket.on("receiveMessage", (data) => {
+    displayMessage(data);
+});
+
+// Send message
+document.getElementById("sendChat").addEventListener("click", () => {
+    const input = document.getElementById("chatInput");
+    const message = input.value.trim();
+
+    if (message !== "") {
+        const data = { user: "Customer", text: message };
+        socket.emit("sendMessage", data);
+        input.value = "";
+    }
+});
+
+// Display messages
+function displayMessage(data) {
+    const chatMessages = document.getElementById("chatMessages");
+    const messageElement = document.createElement("p");
+    messageElement.innerHTML = `<strong>${data.user}:</strong> ${data.text}`;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+    function toggleChat() {
+            const chatPopup = document.getElementById("chatPopup");
+            chatPopup.style.display = chatPopup.style.display === "block" ? "none" : "block";
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById("chatInput");
+            const chatMessages = document.getElementById("chatMessages");
+            if (chatInput.value.trim() !== "") {
+                const message = document.createElement("p");
+                message.textContent = chatInput.value;
+                chatMessages.appendChild(message);
+                chatInput.value = "";
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
     function logout() {
         // Perform logout operations here
         alert("Logged out successfully!");
         // Redirect to login page or perform other actions
         window.location.href = "login.html";
     }
-</script>
+   
+    /// Function to fetch and display menu items
+    async function fetchMenuItems() {
+    try {
+        const response = await fetch('http://localhost:3000/menu-items'); // Your backend URL
+        if (!response.ok) throw new Error('Failed to fetch menu items');
+        
+        const menuItems = await response.json();
+        
+        // Display items on the page
+        const menuContainer = document.getElementById('menu-container');
+        menuContainer.innerHTML = ''; // Clear existing content
+
+        menuItems.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.classList.add('menu_items');
+        itemElement.innerHTML = `
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p>Price: $${item.price}</p>
+        `;
+        menuContainer.appendChild(itemElement);
+        });
+    } catch (error) {
+        console.error('Error fetching menu items:', error);
+    }
+    }
+    // Call the function to display the items when the page loads
+    window.onload = fetchMenuItems;
+  </script>
 </body>
 </html>

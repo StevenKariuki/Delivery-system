@@ -6,104 +6,219 @@
     <title>Payment | Pizza Palace</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f5f6fa;
+            color: #333;
+            line-height: 1.6;
+        }
 
         header {
-            background-color: #ff4757;
+            background-color: #ff6b6b;
             color: #fff;
-            padding: 15px 20px;
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        header nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        header nav ul li {
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        header nav ul li a:hover {
+            color: #ffdd59;
         }
 
         .container {
             max-width: 700px;
-            margin: 30px auto;
+            margin: 40px auto;
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            color: #333;
+            color: #444;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.6rem;
         }
 
         .cart-items {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .cart-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .cart-item:last-child {
             border-bottom: none;
         }
 
+        .cart-item h4 {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .cart-item p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
         .total-price {
             text-align: right;
-            font-size: 18px;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-top: 20px;
+            color: #28a745;
+            margin: 10px 0 30px;
         }
 
-        form {
-            display: flex;
-            flex-direction: column;
+        form label {
+            font-weight: 600;
+            margin-top: 15px;
+            display: block;
+            color: #333;
         }
 
-        label {
-            margin: 10px 0 5px 0;
-            font-weight: bold;
+        form input, 
+        form select {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            color: #495057;
+            transition: box-shadow 0.3s ease;
         }
 
-        input, select {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+        form input:focus, 
+        form select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+        }
+
+        form input::placeholder {
+            font-size: 0.95rem;
+            color: #aaa;
         }
 
         button {
-            padding: 10px;
-            font-size: 16px;
-            color: #fff;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
             background-color: #007bff;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button:hover {
             background-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+        .back-button {
+            margin-top: 10px;
+            background-color: #6c757d;
+        }
+
+        .back-button:hover {
+            background-color: #495057;
+            transform: scale(1.02);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Highlight when invalid/valid */
+        form input:invalid, 
+        form select:invalid {
+            background-color: rgba(255, 0, 0, 0.05);
+            border-color: #dc3545;
+        }
+
+        form input:valid, 
+        form select:valid {
+            background-color: rgba(40, 167, 69, 0.05);
+            border-color: #28a745;
+        }
+
+        /* Notification styling */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.4s ease;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
+     <!-- Header -->
+     <header>
         <h1>Order | Payment</h1>
         <nav>
             <ul>
-                <li><a class="Home" href="index-user.html">Home</a></li>
+                <li><a href="index-user.html">Home</a></li>
                 <li><a href="cart.html">Cart</a></li>
                 <li><a href="tracking.html">Track Order</a></li>
-                <li><a href="checkout.html">Check out</a></li>
+                <li><a href="checkout.html">Check Out</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Container -->
-    <div class="container">
+     <!-- Main Container -->
+     <div class="container">
         <h2>Review Your Order</h2>
         <div class="cart-items" id="cart-items">
-            <!-- Added items will be populated here dynamically using JavaScript -->
+            <!-- Cart Items will dynamically appear here -->
         </div>
         <p class="total-price" id="total-price">Total: $0.00</p>
 
@@ -123,53 +238,156 @@
 
             <label for="payment-method">Payment Method:</label>
             <select id="payment-method" required>
+                <option value="" disabled selected>Select Payment Method</option>
                 <option value="credit-card">Credit Card</option>
                 <option value="paypal">PayPal</option>
-                <option value="paypal">Mpesa</option>
+                <option value="mpesa">Mpesa</option>
                 <option value="cash-on-delivery">Cash on Delivery</option>
             </select>
 
+            <!-- Credit Card Section -->
+            <div id="credit-card-details" class="hidden">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" placeholder="Enter your credit card number">
+
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY">
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" placeholder="Enter CVV">
+            </div>
+
+            <!-- PayPal Section -->
+            <div id="paypal-details" class="hidden">
+                <label for="paypal-email">PayPal Email:</label>
+                <input type="email" id="paypal-email" placeholder="Enter your PayPal email">
+            </div>
+
+            <!-- Mpesa Section -->
+            <div id="mpesa-details" class="hidden">
+                <label for="mpesa-number">Mpesa Number:</label>
+                <input type="text" id="mpesa-number" placeholder="Enter your Mpesa number">
+            </div>
+
             <button type="submit">Place Order</button>
         </form>
+        <button class="back-button" onclick="history.back()">Back</button>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadCartForPayment();
 
-    <!-- Add Order ID generation in your payment form submission -->
-<script>
-    // Form submission handling
-    document.getElementById('payment-form').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent form from reloading the page
+            const paymentMethodSelect = document.getElementById("payment-method");
+            const creditCardDetails = document.getElementById("credit-card-details");
+            const paypalDetails = document.getElementById("paypal-details");
+            const mpesaDetails = document.getElementById("mpesa-details");
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
-        const paymentMethod = document.getElementById('payment-method').value;
+            paymentMethodSelect.addEventListener("change", () => {
+                creditCardDetails.classList.add("hidden");
+                paypalDetails.classList.add("hidden");
+                mpesaDetails.classList.add("hidden");
 
-        // Generate a unique Order ID (e.g., a random number or timestamp)
-        const orderId = Math.floor(Math.random() * 1000000); // For example: generates a random number between 0 and 999999
+                switch (paymentMethodSelect.value) {
+                    case "credit-card":
+                        creditCardDetails.classList.remove("hidden");
+                        break;
+                    case "paypal":
+                        paypalDetails.classList.remove("hidden");
+                        break;
+                    case "mpesa":
+                        mpesaDetails.classList.remove("hidden");
+                        break;
+                }
+            });
+        });
 
-        // Store the order information and ID in localStorage or send it to your backend
-        const orderDetails = {
-            orderId,
-            status: 'Order Placed', // Initial status
-            name,
-            email,
-            phone,
-            address,
-            paymentMethod,
-        };
+        function loadCartForPayment() {
+            const cartItemsContainer = document.getElementById("cart-items");
+            const totalPriceElement = document.getElementById("total-price");
 
-        // Save order details to localStorage (or a database for real use cases)
-        localStorage.setItem(`order-${orderId}`, JSON.stringify(orderDetails));
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        // Show confirmation
-        alert(`Thank you, ${name}! Your order has been placed. Your Order ID is ${orderId}.`);
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty!</p>";
+                totalPriceElement.innerText = "Total: $0.00";
+                return;
+            }
 
-        // Clear the cart
-        localStorage.removeItem('cart');
-        window.location.href = "index-user.html"; // Redirect to the homepage or confirmation page
-    });
-</script>
+            cartItemsContainer.innerHTML = "";
+            let total = 0;
 
+            cart.forEach((item) => {
+                const itemTotal = item.quantity * item.price;
+                total += itemTotal;
+
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item");
+                itemElement.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>Quantity: ${item.quantity}</p>
+                    <p>Price: $${itemTotal.toFixed(2)}</p>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+
+            totalPriceElement.innerText = `Total: $${total.toFixed(2)}`;
+        }
+
+        // Handle form submission
+document.getElementById('payment-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const paymentMethod = document.getElementById('payment-method').value;
+
+    // Generate a unique Order ID using timestamp + random number
+    const orderId = `ORD-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const orderDetails = {
+        orderId,
+        status: 'Order Placed',
+        name,
+        email,
+        phone,
+        address,
+        paymentMethod,
+    };
+
+    // Save order details to localStorage
+    localStorage.setItem(`order-${orderId}`, JSON.stringify(orderDetails));
+
+    // Show notification
+    const notification = document.createElement('div');
+    notification.innerText = `Thank you, ${name}! Your order has been placed. Order ID: ${orderId}`;
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.padding = '15px';
+    notification.style.backgroundColor = '#28a745';
+    notification.style.color = '#fff';
+    notification.style.fontSize = '16px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.1)';
+    
+    document.body.appendChild(notification);
+
+    // Remove notification after 4 seconds
+    setTimeout(() => {
+        notification.remove();
+    }, 4000);
+
+    // Clear the cart
+    localStorage.removeItem('cart');
+
+    // Redirect to home page after a short delay
+    setTimeout(() => {
+        window.location.href = "index-user.html";
+    }, 2000);
+});
+
+    </script>
 </body>
 </html>

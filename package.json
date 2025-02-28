@@ -4,6 +4,17 @@
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql": "^2.18.1"
-  }
+    "mysql": "^2.18.1",
+    "socket.io": "^4.8.1"
+  },
+  "name": "school-project",
+  "version": "1.0.0",
+  "description": "The **Delivery System** is a web-based application designed to streamline the process of ordering and delivering food efficiently. This project leverages **Node.js**, **Express**, and **MySQL** for the backend while the frontend is under development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
