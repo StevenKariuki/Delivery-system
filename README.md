@@ -96,7 +96,7 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ## Contact
 For inquiries or collaboration, feel free to reach out:  
-📧 **Email:** stevenkariuki@example.com  
+📧 **Email:** steven.kariuki9@outlook.com
 🔗 **GitHub:** [StevenKariuki](https://github.com/StevenKariuki)
 
 ---
