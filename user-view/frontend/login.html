@@ -35,53 +35,127 @@
 
   <script src="login.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const token = localStorage.getItem("token");
-      if (token) {
+    // document.addEventListener("DOMContentLoaded", function() {
+    //   const token = localStorage.getItem("token");
+    //   if (token) {
+    //     window.location.href = "index-user.html";
+    //   }
+    // });
+
+
+    document.addEventListener("DOMContentLoaded", async function() {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    try {
+      // Verify the token with the server
+      const response = await fetch("http://localhost:5000/verify-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        // If token is valid, redirect
         window.location.href = "index-user.html";
+      } else {
+        // If token is invalid, clear it from storage
+        localStorage.removeItem("token");
       }
-    });
+    } catch (error) {
+      console.error("Token verification failed:", error);
+      localStorage.removeItem("token");
+    }
+  }
+});
+
+
+
+    // document.getElementById("loginForm").addEventListener("submit", async (event) => {
+    //   event.preventDefault();
+
+    //   const email = document.getElementById("email").value.trim();
+    //   const password = document.getElementById("password").value.trim();
+
+    //   if (!email || !password) {
+    //     alert("Please fill in both email and password.");
+    //     return;
+    //   }
+
+    //   try {
+    //     const response = await fetch("http://localhost:5000/login", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({ email, password }),
+    //     });
+
+    //     const data = await response.json();
+
+    //     if (response.ok) {
+    //       alert("Login successful!");
+    //       localStorage.setItem("token", data.token);
+    //       localStorage.setItem("role", data.user.role);
+
+    //       if (data.user.role === "admin") {
+    //         window.location.href = "index-admin.html";
+    //       } else {
+    //         window.location.href = "index-user.html";
+    //       }
+    //     } else {
+    //       alert(data.message || "Login failed. Please check your credentials.");
+    //     }
+    //   } catch (error) {
+    //     console.error("Error:", error);
+    //     alert("An error occurred. Please try again.");
+    //   }
+    // });
 
     document.getElementById("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
+  event.preventDefault();
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-      if (!email || !password) {
-        alert("Please fill in both email and password.");
-        return;
-      }
+  if (!email || !password) {
+    alert("Please fill in both email and password.");
+    return;
+  }
 
-      try {
-        const response = await fetch("http://localhost:5000/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert("Login successful!");
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("role", data.user.role);
-
-          if (data.user.role === "admin") {
-            window.location.href = "index-admin.html";
-          } else {
-            window.location.href = "index-user.html";
-          }
-        } else {
-          alert(data.message || "Login failed. Please check your credentials.");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
-      }
+  try {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
     });
+
+    const data = await response.json();
+
+    if (response.ok && data.token) {
+      alert("Login successful!");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.user.role);
+
+      if (data.user.role === "admin") {
+        window.location.href = "index-admin.html";
+      } else {
+        window.location.href = "index-user.html";
+      }
+    } else {
+      alert(data.message || "Login failed. Please check your credentials.");
+      localStorage.removeItem("token"); // Ensure no invalid token is stored
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("An error occurred. Please try again.");
+  }
+});
+
   </script>
 </body>
 </html>
