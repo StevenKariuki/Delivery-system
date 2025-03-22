@@ -6,86 +6,27 @@
     <title>Food Delivery - Home</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Inline styles for testing, should be moved to styles.css */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin: 20px;
-        }
-
-        #searchInput {
-            width: 300px;
-            padding: 10px;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            padding: 10px;
-            font-size: 1rem;
-            background-color: red;
+        body {
+            background-color: #2c2c2c; /* Deep charcoal */
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
+            font-family: 'Arial', sans-serif;
         }
 
-        button:hover {
-            background-color: rgb(82, 18, 18);
+        header {
+            background-color: black;
+            color: gold;
+            animation: slideIn 1s ease-in-out;
+            transition: background-color 0.5s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes logoAnimation {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
+        header a {
+            color: gold;
         }
 
         .logo {
             animation: logoAnimation 2s infinite;
         }
 
-        .restaurant-card {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        header {
-            animation: slideIn 1s ease-in-out;
-            transition: background-color 0.5s ease;
-        }
-
-        .transparent-header {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .welcome-message {
-            text-align: center;
-            font-size: 1.5rem;
-            margin-top: 20px;
-            font-style: italic;
-        }
-
-        .playstore-icon {
-            width: 150px;
-            margin-top: 20px;
-        }
-
-        .twitter-icon {
-            width: 50px;
-            margin-top: 20px;
-            margin-left: 10px;
-        }
         .search-container {
             display: flex;
             justify-content: center;
@@ -103,8 +44,8 @@
         button {
             padding: 10px;
             font-size: 1rem;
-            background-color: red;
-            color: white;
+            background-color: gold;
+            color: black;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -112,7 +53,26 @@
         }
 
         button:hover {
-            background-color: rgb(82, 18, 18);
+            background-color: #ffd700;
+            box-shadow: 0 0 10px gold;
+        }
+
+        .restaurant-card {
+            background-color: #3a3a3a; /* Dark gray */
+            color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .restaurant-card:hover {
+            box-shadow: 0 0 10px white;
+        }
+
+        h1, h3 {
+            font-family: 'Times New Roman', serif; /* Elegant serif fonts */
         }
 
         .chat-button {
@@ -155,6 +115,22 @@
             padding: 5px;
         }
 
+        footer {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .playstore-icon, .twitter-icon {
+            width: 50px;
+            margin-top: 20px;
+            margin-left: 10px;
+        }
+
+        .playstore-icon:hover, .twitter-icon:hover {
+            box-shadow: 0 0 10px white;
+        }
     </style>
 </head>
 <body>
@@ -164,7 +140,7 @@
             <img src="images/profile_icon.png" alt="Profile Icon">
             <h4 class="profile-name"><a href="profile.html">Profile</a></h4>
         </div>
-        <div class="logo">Vi_brant's FoodDelivery</div>
+        <div class="logo">Phiji's FoodDelivery</div>
         <nav>
             <ul>
                 <li><a class="Home" href="index-user.html">Home</a></li>
@@ -192,7 +168,7 @@
 
     <!-- Restaurants Section -->
     <section class="restaurants">
-        <h1>Explore our Restaurants</h1>
+        <h1 style="color: white;">Explore our Restaurants</h1>
         <div>
             <marquee behavior="scroll" direction="right"><i>Get the best meals you've ever seen.</i></marquee>
         </div>
@@ -292,7 +268,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2023 Vi_brant's FoodDelivery. All rights reserved.</p>
+            <p>&copy; 2023 Phiji's FoodDelivery. All rights reserved.</p>
+            <p><b><small>Vi_brant</small></b></p>
         </div>
     </footer>
 

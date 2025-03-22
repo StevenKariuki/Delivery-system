@@ -6,6 +6,63 @@
   <title>Food Delivery - Login</title>
   <link rel="stylesheet" href="styleslogin.css">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-color: #2C2C2C; /* Deep charcoal */
+      color: #FFFFFF; /* White text */
+      font-family: 'Arial', sans-serif; /* Default sans-serif for body */
+    }
+    header {
+      background-color: #000000; /* Black navbar */
+      color: #FFD700; /* Golden text */
+    }
+    header .logo {
+      font-family: 'Georgia', serif; /* Elegant serif font for headings */
+    }
+    nav ul li a {
+      color: #FFD700; /* Golden text */
+    }
+    nav ul li a:hover {
+      color: #FFFFFF; /* White text on hover */
+    }
+    .auth-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .auth-box {
+      background-color: #3A3A3A; /* Dark gray card */
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px solid #FFD700; /* Highlighted border */
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Soft glowing effect */
+    }
+    .auth-box h1 {
+      font-family: 'Georgia', serif; /* Elegant serif font for headings */
+    }
+    .auth-box label {
+      font-family: 'Arial', sans-serif; /* Sans-serif for body */
+    }
+    .btn {
+      background-color: #FFD700; /* Gold button */
+      color: #000000; /* Black text */
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); /* Soft glowing effect */
+    }
+    a {
+      color: #FFD700; /* Golden text */
+    }
+    a:hover {
+      color: #FFFFFF; /* White text on hover */
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -19,7 +76,7 @@
   
   <section class="auth-container">
     <div class="auth-box">
-      <h1>Login</h1>
+      <h1 style="color: white;">Login</h1>
       <form id="loginForm">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
@@ -35,127 +92,72 @@
 
   <script src="login.js"></script>
   <script>
-    // document.addEventListener("DOMContentLoaded", function() {
-    //   const token = localStorage.getItem("token");
-    //   if (token) {
-    //     window.location.href = "index-user.html";
-    //   }
-    // });
-
-    
     document.addEventListener("DOMContentLoaded", async function() {
-  const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-  if (token) {
-    try {
-      // Verify the token with the server
-      const response = await fetch("http://localhost:5000/verify-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+      if (token) {
+        try {
+          const response = await fetch("http://localhost:5000/verify-token", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`
+            }
+          });
+
+          if (response.ok) {
+            window.location.href = "index-user.html";
+          } else {
+            localStorage.removeItem("token");
+          }
+        } catch (error) {
+          console.error("Token verification failed:", error);
+          localStorage.removeItem("token");
         }
-      });
-
-      if (response.ok) {
-        // If token is valid, redirect
-        window.location.href = "index-user.html";
-      } else {
-        // If token is invalid, clear it from storage
-        localStorage.removeItem("token");
       }
-    } catch (error) {
-      console.error("Token verification failed:", error);
-      localStorage.removeItem("token");
-    }
-  }
-});
-
-
-
-    // document.getElementById("loginForm").addEventListener("submit", async (event) => {
-    //   event.preventDefault();
-
-    //   const email = document.getElementById("email").value.trim();
-    //   const password = document.getElementById("password").value.trim();
-
-    //   if (!email || !password) {
-    //     alert("Please fill in both email and password.");
-    //     return;
-    //   }
-
-    //   try {
-    //     const response = await fetch("http://localhost:5000/login", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({ email, password }),
-    //     });
-
-    //     const data = await response.json();
-
-    //     if (response.ok) {
-    //       alert("Login successful!");
-    //       localStorage.setItem("token", data.token);
-    //       localStorage.setItem("role", data.user.role);
-
-    //       if (data.user.role === "admin") {
-    //         window.location.href = "index-admin.html";
-    //       } else {
-    //         window.location.href = "index-user.html";
-    //       }
-    //     } else {
-    //       alert(data.message || "Login failed. Please check your credentials.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error:", error);
-    //     alert("An error occurred. Please try again.");
-    //   }
-    // });
-
-    document.getElementById("loginForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  if (!email || !password) {
-    alert("Please fill in both email and password.");
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
     });
 
-    const data = await response.json();
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    if (response.ok && data.token) {
-      alert("Login successful!");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-      if (data.user.role === "admin") {
-        window.location.href = "index-admin.html";
-      } else {
-        window.location.href = "index-user.html";
+      if (!email || !password) {
+        alert("Please fill in both email and password.");
+        return;
       }
-    } else {
-      alert(data.message || "Login failed. Please check your credentials.");
-      localStorage.removeItem("token"); // Ensure no invalid token is stored
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    alert("An error occurred. Please try again.");
-  }
-});
 
+      try {
+        const response = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.token) {
+          alert("Login successful!");
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("role", data.user.role);
+
+          if (data.user.role === "admin") {
+            window.location.href = "index-admin.html";
+          } else {
+            window.location.href = "index-user.html";
+          }
+        } else {
+          alert(data.message || "Login failed. Please check your credentials.");
+          localStorage.removeItem("token");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      }
+    });
   </script>
 </body>
 </html>

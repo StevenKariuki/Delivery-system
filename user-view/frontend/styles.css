@@ -5,8 +5,8 @@ body {
     padding: 0;
     box-sizing: border-box;
     line-height: 1.6;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #2c2c2c;
+    color: white;
 }
 /* Profile */
 .profile{
@@ -117,6 +117,7 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
+    color: black;
 }
 
 .restaurants .restaurant-list, .menu .menu-list {
@@ -143,6 +144,7 @@ h1 {
 
 .restaurant-card:hover {
     background-color: #f0f0f0;
+    color: gold;
     transform: scale(1.05);
 }
 

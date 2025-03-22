@@ -10,7 +10,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #2c3e50; /* Deep charcoal */
+            color: #ecf0f1; /* Light text color */
         }
 
         header {
@@ -18,8 +19,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 15px 30px;
-            background-color: #ff4757;
-            color: white;
+            background-color: #000; /* Black */
+            color: #ffd700; /* Golden text */
             position: fixed;
             width: 100%;
             top: 0;
@@ -43,13 +44,13 @@
         }
 
         header nav ul li a {
-            color: #fff;
+            color: #ffd700; /* Golden text */
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         header nav ul li a:hover {
-            color: #ffd700;
+            color: #fff; /* White text on hover */
         }
 
         main {
@@ -61,7 +62,7 @@
         }
 
         .profile-section {
-            background: #fff;
+            background: #34495e; /* Dark gray */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
             border-radius: 8px;
@@ -78,6 +79,7 @@
 
         .profile-section h1, .profile-section p {
             margin: 10px 0;
+            font-family: 'Times New Roman', serif; /* Elegant serif font for headings */
         }
 
         .profile-section .edit-btn,
@@ -90,27 +92,28 @@
             cursor: pointer;
             text-decoration: none;
             color: #fff;
+            transition: box-shadow 0.3s ease;
         }
 
         .profile-section .edit-btn {
-            background-color: #ff6347;
+            background-color: #ffd700; /* Gold */
             margin-right: 10px;
         }
 
         .profile-section .edit-btn:hover {
-            background-color: #e5533d;
+            box-shadow: 0 0 10px #ffd700; /* Soft glowing effect */
         }
 
         .profile-section .logout-btn {
-            background-color: #333;
+            background-color: #39ff14; /* Neon green */
         }
 
         .profile-section .logout-btn:hover {
-            background-color: #555;
+            box-shadow: 0 0 10px #39ff14; /* Soft glowing effect */
         }
 
         .order-history {
-            background: #fff;
+            background: #34495e; /* Dark gray */
             margin-top: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -120,6 +123,7 @@
         .order-history h2 {
             font-size: 22px;
             margin-bottom: 20px;
+            font-family: 'Times New Roman', serif; /* Elegant serif font for headings */
         }
 
         .order-card {
@@ -138,13 +142,18 @@
             width: 50px;
             height: 50px;
             border-radius: 8px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .order-card img:hover {
+            box-shadow: 0 0 10px #fff; /* Soft glowing effect */
         }
 
         footer {
             text-align: center;
             padding: 15px;
-            background-color: #333;
-            color: #fff;
+            background-color: #000; /* Black */
+            color: #ffd700; /* Golden text */
             margin-top: 30px;
             font-size: 14px;
         }
@@ -165,34 +174,34 @@
                 align-items: flex-start;
             }
         }
-         /* Styles for the Back button */
-        .back-button {
-                position: fixed; 
-                top: 90px; 
-                left: 20px; 
-                padding: 10px 20px;
-                font-size: 16px;
-                color: #ffffff;
-                background-color: #ff5733; 
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-                transition: background-color 0.3s ease; 
-                z-index: 10; /* Ensure it stays on top of other elements */
-            }
 
-            .back-button:hover {
-                background-color: #c70039; /* Darker color on hover */
-                transform: scale3d(1.05, 1.05, 1); /* Slightly increase size on hover */
-                
-            }
+        /* Styles for the Back button */
+        .back-button {
+            position: fixed; 
+            top: 90px; 
+            left: 20px; 
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #ff5733; 
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease; 
+            z-index: 10; /* Ensure it stays on top of other elements */
+        }
+
+        .back-button:hover {
+            background-color: #c70039; /* Darker color on hover */
+            transform: scale3d(1.05, 1.05, 1); /* Slightly increase size on hover */
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">Vi_brant's FoodDelivery</div>
+        <div class="logo">Phiji's FoodDelivery</div>
         <nav>
             <ul>
                 <li><a href="index-user.html">Home</a></li>
@@ -217,7 +226,6 @@
             <button id="logout-button" class="logout-btn">Logout</button>
         </div>
 
-
         <!-- Order History Section -->
         <div class="container">
             <h2>Your Order History</h2>
@@ -229,8 +237,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2023 FoodDelivery. Developed by Steven. All rights reserved.</p>
-        
+        <p>© 2023 FoodDelivery. Developed by Phiji. All rights reserved.</p>
     </footer>
 
     <script>
@@ -243,65 +250,47 @@
             const userEmail = localStorage.getItem("userEmail");
             const memberSince = localStorage.getItem("memberSince") || "January 2023";  
 
-            // if (!userName || !userEmail) {
-            //     window.location.href = 'login.html'; // Redirect to login if not authenticated
-            // }
-
             document.getElementById("userName").textContent =  userName;
             document.getElementById("userEmail").textContent = `Email: ${userEmail}`;
             document.getElementById("memberSince").textContent = `Member since: ${memberSince}`;
 
             // Function to load order history
-        function loadOrderHistory() {
-            const orderHistoryDiv = document.getElementById('order-history');
-            orderHistoryDiv.innerHTML = '';
+            function loadOrderHistory() {
+                const orderHistoryDiv = document.getElementById('order-history');
+                orderHistoryDiv.innerHTML = '';
 
-            let orders = [];
-            // Retrieve all stored orders
-            for (let key in localStorage) {
-                if (key.startsWith('order-')) {
-                    orders.push(JSON.parse(localStorage.getItem(key)));
+                let orders = [];
+                // Retrieve all stored orders
+                for (let key in localStorage) {
+                    if (key.startsWith('order-')) {
+                        orders.push(JSON.parse(localStorage.getItem(key)));
+                    }
                 }
+
+                if (orders.length === 0) {
+                    orderHistoryDiv.innerHTML = "<p>No previous orders found.</p>";
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.classList.add('order-item');
+                    orderElement.innerHTML = `
+                        <p class="order-id">Order ID: ${order.orderId}</p>
+                        <p>Name: ${order.name}</p>
+                        <p>Email: ${order.email}</p>
+                        <p>Phone: ${order.phone}</p>
+                        <p>Address: ${order.address}</p>
+                        <p>Payment Method: ${order.paymentMethod}</p>
+                        <p>Status: <strong>${order.status}</strong></p>
+                        <hr>
+                    `;
+                    orderHistoryDiv.appendChild(orderElement);
+                });
             }
 
-            if (orders.length === 0) {
-                orderHistoryDiv.innerHTML = "<p>No previous orders found.</p>";
-                return;
-            }
-
-            orders.forEach(order => {
-                const orderElement = document.createElement('div');
-                orderElement.classList.add('order-item');
-                orderElement.innerHTML = `
-                    <p class="order-id">Order ID: ${order.orderId}</p>
-                    <p>Name: ${order.name}</p>
-                    <p>Email: ${order.email}</p>
-                    <p>Phone: ${order.phone}</p>
-                    <p>Address: ${order.address}</p>
-                    <p>Payment Method: ${order.paymentMethod}</p>
-                    <p>Status: <strong>${order.status}</strong></p>
-                    <hr>
-                `;
-                orderHistoryDiv.appendChild(orderElement);
-            });
-        }
-
-        // Load order history when the page loads
-        window.onload = loadOrderHistory;
-            const orderHistoryContainer = document.getElementById("orderHistoryContainer");
-            orders.forEach(order => {
-                const orderCard = `
-                    <div class="order-card">
-                        <img src="${order.image}" alt="${order.name}">
-                        <div class="details">
-                            <h4>${order.name}</h4>
-                            <small>Ordered on: ${order.date}</small>
-                        </div>
-                        <strong>${order.price}</strong>
-                    </div>
-                `;
-                orderHistoryContainer.insertAdjacentHTML('beforeend', orderCard);
-            });
+            // Load order history when the page loads
+            window.onload = loadOrderHistory;
 
             // Handle logout
             document.getElementById('logout-button').addEventListener('click', () => {

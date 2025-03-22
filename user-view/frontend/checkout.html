@@ -7,138 +7,148 @@
   <link rel="stylesheet" href="styles.css">
   <style>
     /* General Styles for Page */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #f8f9fa;
-  color: #333;
-}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #2c3e50; /* Deep charcoal */
+      color: #ecf0f1; /* Light text color */
+    }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ff4757;
-  padding: 15px 20px;
-  color: white;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #000; /* Black */
+      padding: 15px 20px;
+      color: #fff; /* White text */
+    }
 
-header .logo {
-  font-size: 24px;
-  font-weight: bold;
-}
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Georgia', serif; /* Elegant serif font */
+    }
 
-header ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-}
+    header ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
 
-header ul li a, header .cta {
-  text-decoration: none;
-  color: white;
-  padding: 8px 12px;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
+    header ul li a, header .cta {
+      text-decoration: none;
+      color: #fff; /* White text */
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+    }
 
-header ul li a:hover, header .cta:hover {
-  background-color: #e84141;
-}
+    header ul li a:hover, header .cta:hover {
+      background-color: #f39c12; /* Soft glowing effect */
+    }
 
-/* Checkout Section */
-.checkout {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    /* Checkout Section */
+    .checkout {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #34495e; /* Dark gray */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: #ecf0f1; /* White text */
+    }
+    .check-nav{
+      border: solid 2px;
+    }
 
-.checkout h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #ff4757;
-}
+    .checkout h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #f39c12; /* Gold */
+      font-family: 'Georgia', serif; /* Elegant serif font */
+    }
 
-.checkout h2 {
-  margin: 20px 0 10px;
-  color: #333;
-  font-size: 20px;
-}
+    .checkout h2 {
+      margin: 20px 0 10px;
+      color: #ecf0f1; /* White text */
+      font-size: 20px;
+      font-family: 'Georgia', serif; /* Elegant serif font */
+    }
 
-.checkout label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-  color: #555;
-}
+    .checkout label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #bdc3c7; /* Light gray text */
+    }
 
-.checkout input[type="text"],
-.checkout input[type="email"],
-.checkout input[type="tel"],
-.checkout input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-}
+    .checkout input[type="text"],
+    .checkout input[type="email"],
+    .checkout input[type="tel"],
+    .checkout input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #7f8c8d; /* Gray border */
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #2c3e50; /* Deep charcoal */
+      color: #ecf0f1; /* White text */
+    }
 
-.checkout .payment-method {
-  margin-bottom: 20px;
-}
+    .checkout .payment-method {
+      margin-bottom: 20px;
+    }
 
-.checkout .payment-method label {
-  display: block;
-  margin-bottom: 10px;
-}
+    .checkout .payment-method label {
+      display: block;
+      margin-bottom: 10px;
+    }
 
-.checkout .order-summary {
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f7f7f7;
-  margin-bottom: 20px;
-}
+    .checkout .order-summary {
+      padding: 15px;
+      border: 1px solid #7f8c8d; /* Gray border */
+      border-radius: 5px;
+      background-color: #34495e; /* Dark gray */
+      margin-bottom: 20px;
+    }
 
-.checkout .order-summary p {
-  font-size: 18px;
-  margin: 5px 0;
-  color: #555;
-}
+    .checkout .order-summary p {
+      font-size: 18px;
+      margin: 5px 0;
+      color: #bdc3c7; /* Light gray text */
+    }
 
-.checkout .order-summary span {
-  font-weight: bold;
-}
+    .checkout .order-summary span {
+      font-weight: bold;
+    }
 
-.checkout .btn {
-  background-color: #ff4757;
-  color: white;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
+    .checkout .btn {
+      background-color: #f39c12; /* Gold */
+      color: #2c3e50; /* Deep charcoal text */
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.checkout .btn:hover {
-  background-color: #e84141;
-}
+    .checkout .btn:hover {
+      background-color: #27ae60; /* Neon green */
+      color: #ecf0f1; /* White text */
+    }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: white;
-  font-size: 14px;
-}
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #000; /* Black */
+      color: #fff; /* White text */
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -147,7 +157,7 @@ footer {
     <div class="profile">
       <img src="images/profile_icon.png" alt="">
       <h4 class="profile-name"><a href="profile.html">Profile</a></h4>
-  </div>
+    </div>
     <div class="logo">FoodDelivery</div>
     <nav>
       <ul>
@@ -155,7 +165,7 @@ footer {
         <li><a href="menu.html">Menu</a></li>
         <li><a href="cart.html">Cart</a></li>
         <li><a href="tracking.html">Track Order</a></li>
-        <li><a href="checkout.html">Check out</a></li>
+        <li class="check-nav"><a href="checkout.html">Check out</a></li>
       </ul>
     </nav>
     <a class="cta" href="cart.html">View Cart</a>

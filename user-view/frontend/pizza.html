@@ -7,65 +7,70 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="stylemenu.css">
     <style>
-
-    .search-container {
-        display: flex;
-        justify-content: center;
-        margin: 20px;
-    }
-
-    #searchInput {
-        width: 300px;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    button {
-        padding: 10px;
-        font-size: 1rem;
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-left: 10px;
-    }
-
-    button:hover {
-        background-color: rgb(182, 113, 113);
-    }
-
-        @keyframes logoAnimation {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        body {
+            background-color: #2c2c2c; /* Deep charcoal */
+            color: #ffffff; /* White text */
+            font-family: 'Arial', sans-serif; /* Default sans-serif for body */
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        header {
+            background-color: #000000; /* Black navbar */
+            color: #ffd700; /* Golden text */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes slideIn {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(0); }
+        header a {
+            color: #ffd700; /* Golden text */
+            text-decoration: none;
+            margin: 0 10px;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
+        header a:hover {
+            color: #ffffff; /* White text on hover */
         }
 
         .logo {
+            font-family: 'Georgia', serif; /* Elegant serif font for headings */
+            font-size: 2rem;
             animation: logoAnimation 2s infinite;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        #searchInput {
+            width: 300px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #39ff14; /* Neon green */
+            color: #000000; /* Black text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #32cd32; /* Slightly darker neon green */
+            box-shadow: 0 0 10px #32cd32; /* Soft glowing effect */
         }
 
         .menu-nav {
             text-decoration: none;
-            color: white;
+            color: #ffd700; /* Golden text */
             font-weight: bold;
             border: 1px solid;
             border-radius: 10px;
@@ -74,17 +79,36 @@
         }
 
         .menu-item {
+            background-color: #3a3a3a; /* Dark gray */
+            color: #ffffff; /* White text */
+            border: 1px solid #ffd700; /* Highlighted border */
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
             animation: slideIn 1s ease-out;
         }
 
-        .btn {
-            animation: bounce 3s infinite;
-        }
-        .btn:hover{
-            animation-play-state: paused;
+        .menu-item img {
+            width: 100%;
+            border-radius: 10px;
+            transition: box-shadow 0.3s ease;
         }
 
-        /* Styles for the Back button */
+        .menu-item img:hover {
+            box-shadow: 0 0 10px #ffd700; /* Soft glowing effect */
+        }
+
+        .btn {
+            background-color: #ffd700; /* Gold */
+            color: #000000; /* Black text */
+            animation: bounce 3s infinite;
+        }
+
+        .btn:hover {
+            animation-play-state: paused;
+            box-shadow: 0 0 10px #ffd700; /* Soft glowing effect */
+        }
+
         .back-button {
             position: fixed; 
             top: 90px; 
@@ -104,7 +128,13 @@
         .back-button:hover {
             background-color: #c70039; /* Darker color on hover */
             transform: scale3d(1.05, 1.05, 1); /* Slightly increase size on hover */
-            
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000000; /* Black footer */
+            color: #ffd700; /* Golden text */
         }
     </style>
 </head>
@@ -125,13 +155,12 @@
             </ul>
         </nav>
         <!-- Back Button -->
-         <button class="back-button" onclick="goBack()">Back to Home</button>
+        <button class="back-button" onclick="goBack()">Back to Home</button>
 
         <a class="cta" href="cart.html">Cart (0)</a>
     </header>
 
-   
-     <div class="search-container">
+    <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search for pizza..." onkeyup="searchRestaurants()">
         <button onclick="searchRestaurants()">Search</button>
     </div>
@@ -146,7 +175,7 @@
                 <img src="images/pizza_1.png" alt="Margherita Pizza">
                 <h2>Classic Margherita Pizza:</h2>
                 <p>Savor the simplicity of fresh mozzarella, tomatoes, and basil with this classic Margherita pizza."</p>
-                <span class="price">$12.99</span>
+                <span class="price">KES 1299</span>
                 <button class="btn" onclick="addToCart(1, 1)">Add to Cart</button>
             </div>
 
@@ -155,7 +184,7 @@
                 <img src="images/pizza_2.png" alt="Cheeseburger">
                 <h2>Pepperoni Pizza</h2>
                 <p>Enjoy a timeless favorite with crispy pepperoni and gooey melted cheese.</p>
-                <span class="price">$9.99</span>
+                <span class="price">KES 999</span>
                 <button class="btn" onclick="addToCart(2, 1)">Add to Cart</button>
             </div>
 
@@ -164,7 +193,7 @@
                 <img src="images/pizza_3.png" alt="Caesar Salad">
                 <h2>Vegetarian Pizza:</h2>
                 <p>Packed with vibrant veggies, this pizza is a healthy and delicious choice.</p>
-                <span class="price">$7.99</span>
+                <span class="price">KES 799</span>
                 <button class="btn" onclick="addToCart(3, 1)">Add to Cart</button>
             </div>
 
@@ -173,7 +202,7 @@
                 <img src="images/pizza_4.png" alt="Chocolate Cake">
                 <h2>BBQ Chicken Pizza</h2>
                 <p>Indulge in smoky BBQ chicken, tangy sauce, and fresh ingredients for the perfect slice.</p>
-                <span class="price">$6.99</span>
+                <span class="price">KES 699</span>
                 <button class="btn" onclick="addToCart(4, 1)">Add to Cart</button>
             </div>
         </div>
@@ -184,7 +213,7 @@
                 <img src="images/pizza_5.png" alt="">
                 <h2>Classic Margherita Pizza:</h2>
                 <p>Savor the simplicity of fresh mozzarella, tomatoes, and basil with this classic Margherita pizza."</p>
-                <span class="price">$12.99</span>
+                <span class="price">KES 1299</span>
                 <button class="btn" onclick="addToCart(5, 1)">Add to Cart</button>
             </div>
 
@@ -193,7 +222,7 @@
                 <img src="images/pizza6.png" alt="">
                 <h2>Pepperoni Pizza</h2>
                 <p>Enjoy a timeless favorite with crispy pepperoni and gooey melted cheese.</p>
-                <span class="price">$9.99</span>
+                <span class="price">KES 999</span>
                 <button class="btn" onclick="addToCart(6, 1)">Add to Cart</button>
             </div>
 
@@ -202,7 +231,7 @@
                 <img src="images/pizza_7.png" alt="Caesar Salad">
                 <h2>Vegetarian Pizza:</h2>
                 <p>Packed with vibrant veggies, this pizza is a healthy and delicious choice.</p>
-                <span class="price">$7.99</span>
+                <span class="price">KES 799</span>
                 <button class="btn" onclick="addToCart(7, 1)">Add to Cart</button>
             </div>
 
@@ -211,128 +240,123 @@
                 <img src="images/pizza_8.png" alt="Chocolate Cake">
                 <h2>BBQ Chicken Pizza</h2>
                 <p>Indulge in smoky BBQ chicken, tangy sauce, and fresh ingredients for the perfect slice.</p>
-                <span class="price">$6.99</span>
+                <span class="price">KES 699</span>
                 <button class="btn" onclick="addToCart(8, 1)">Add to Cart</button>
             </div>
         </div>
     </section>
-
-    
 
     <!-- Footer -->
     <footer>
         <p>© 2023 FoodDelivery. All rights reserved. Powered by Steven's Deliciousness!</p>
     </footer>
 
-    <script src="scriptpizza.js">
-
-    </script>
+    <script src="scriptpizza.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-    updateCartUI(); // Initialize cart count
+            updateCartUI(); // Initialize cart count
 
-    // Handle "Add to Cart" button clicks
-    document.querySelectorAll(".add-to-cart").forEach(button => {
-        button.addEventListener("click", () => {
-            const itemId = parseInt(button.getAttribute("data-id")); // Get item ID from button
-            addToCart(itemId, 1);
+            // Handle "Add to Cart" button clicks
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", () => {
+                    const itemId = parseInt(button.getAttribute("data-id")); // Get item ID from button
+                    addToCart(itemId, 1);
+                });
+            });
+
+            // Load cart items if on the cart page
+            if (document.querySelector(".cart-items")) {
+                loadCartItems();
+            }
         });
-    });
 
-    // Load cart items if on the cart page
-    if (document.querySelector(".cart-items")) {
-        loadCartItems();
-    }
-});
+        // Menu items data (can be replaced with a database fetch in future)
+        const menuItems = [
+            { id: 1, name: "Classic Margherita Pizza", price: 1299 },
+            { id: 2, name: "Pepperoni Pizza", price: 999 },
+            { id: 3, name: "Vegetarian Pizza", price: 799 },
+            { id: 4, name: "BBQ Chicken Pizza", price: 699 },
+            { id: 5, name: "Mushroom Pizza", price: 1099 },
+            { id: 6, name: "Hawaiian Pizza", price: 1199 }
+        ];
 
-// Menu items data (can be replaced with a database fetch in future)
-const menuItems = [
-    { id: 1, name: "Classic Margherita Pizza", price: 12.99 },
-    { id: 2, name: "Pepperoni Pizza", price: 9.99 },
-    { id: 3, name: "Vegetarian Pizza", price: 7.99 },
-    { id: 4, name: "BBQ Chicken Pizza", price: 6.99 },
-    { id: 5, name: "Mushroom Pizza", price: 10.99 },
-    { id: 6, name: "Hawaiian Pizza", price: 11.99 }
-];
+        // Function to add an item to the cart
+        function addToCart(itemId, quantity) {
+            const selectedItem = menuItems.find(item => item.id === itemId);
 
-// Function to add an item to the cart
-function addToCart(itemId, quantity) {
-    const selectedItem = menuItems.find(item => item.id === itemId);
+            if (selectedItem) {
+                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                const existingItem = cart.find(item => item.id === itemId);
 
-    if (selectedItem) {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingItem = cart.find(item => item.id === itemId);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({ ...selectedItem, quantity });
+                }
 
-        if (existingItem) {
-            existingItem.quantity += quantity;
-        } else {
-            cart.push({ ...selectedItem, quantity });
+                localStorage.setItem("cart", JSON.stringify(cart));
+                updateCartUI();
+                alert(`${selectedItem.name} has been added to your cart!`);
+            }
         }
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartUI();
-        alert(`${selectedItem.name} has been added to your cart!`);
-    }
-}
+        // Function to update the cart count in the header
+        function updateCartUI() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.querySelector(".cta").innerText = `Cart (${cartCount})`;
+        }
 
-// Function to update the cart count in the header
-function updateCartUI() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
-    document.querySelector(".cta").innerText = `Cart (${cartCount})`;
-}
+        // Function to load cart items (for cart page)
+        function loadCartItems() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsContainer = document.querySelector(".cart-items");
+            const totalPriceElement = document.querySelector(".cart-summary h3");
+            const checkoutBtn = document.querySelector(".checkout-btn");
 
-// Function to load cart items (for cart page)
-function loadCartItems() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const cartItemsContainer = document.querySelector(".cart-items");
-    const totalPriceElement = document.querySelector(".cart-summary h3");
-    const checkoutBtn = document.querySelector(".checkout-btn");
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty!</p>";
+                totalPriceElement.innerText = "Total: KES 0.00";
+                checkoutBtn.disabled = true;
+                return;
+            }
 
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Your cart is empty!</p>";
-        totalPriceElement.innerText = "Total: $0.00";
-        checkoutBtn.disabled = true;
-        return;
-    }
+            let total = 0;
+            cartItemsContainer.innerHTML = ""; // Clear previous items
 
-    let total = 0;
-    cartItemsContainer.innerHTML = ""; // Clear previous items
+            cart.forEach(item => {
+                const itemTotal = item.quantity * item.price;
+                total += itemTotal;
 
-    cart.forEach(item => {
-        const itemTotal = item.quantity * item.price;
-        total += itemTotal;
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item");
+                itemElement.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>Quantity: ${item.quantity}</p>
+                    <p>Price: KES ${itemTotal.toFixed(2)}</p>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
 
-        const itemElement = document.createElement("div");
-        itemElement.classList.add("cart-item");
-        itemElement.innerHTML = `
-            <h4>${item.name}</h4>
-            <p>Quantity: ${item.quantity}</p>
-            <p>Price: $${itemTotal.toFixed(2)}</p>
-        `;
-        cartItemsContainer.appendChild(itemElement);
-    });
+            totalPriceElement.innerText = `Total: KES ${total.toFixed(2)}`;
+            checkoutBtn.disabled = false; // Enable checkout button
+        }
 
-    totalPriceElement.innerText = `Total: $${total.toFixed(2)}`;
-    checkoutBtn.disabled = false; // Enable checkout button
-}
+        // Function to go back to the previous page
+        function goBack() {
+            window.location.href = "index-user.html";
+        }
 
-// Function to go back to the previous page
-function goBack() {
-    window.location.href = "index-user.html";
-}
+        // Function to search restaurants/menu items
+        function searchRestaurants() {
+            const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+            const menuItems = document.querySelectorAll(".menu-item");
 
-// Function to search restaurants/menu items
-function searchRestaurants() {
-    const searchQuery = document.getElementById("searchInput").value.toLowerCase();
-    const menuItems = document.querySelectorAll(".menu-item");
-
-    menuItems.forEach(item => {
-        const itemName = item.querySelector("h2").textContent.toLowerCase();
-        item.style.display = itemName.includes(searchQuery) ? "block" : "none";
-    });
-}
-
+            menuItems.forEach(item => {
+                const itemName = item.querySelector("h2").textContent.toLowerCase();
+                item.style.display = itemName.includes(searchQuery) ? "block" : "none";
+            });
+        }
     </script>
 </body>
 </html>

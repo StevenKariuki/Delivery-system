@@ -11,17 +11,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #2c3e50; /* Deep charcoal */
+            color: #ecf0f1; /* Light text */
         }
 
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background-color: #ff4757;
+            background-color: #000; /* Black */
             padding: 15px 20px;
-            color: white;
+            color: #f1c40f; /* Gold */
         }
 
         header .logo {
@@ -36,14 +36,15 @@
         }
 
         header ul li a {
-            color: white;
+            color: #f1c40f; /* Gold */
             text-decoration: none;
             border-radius: 6px;
             padding: 8px 12px;
         }
 
         header ul li a:hover {
-            background-color: #e84141;
+            background-color: #f1c40f; /* Gold */
+            color: #000; /* Black */
         }
 
         header nav {
@@ -56,13 +57,15 @@
             max-width: 600px;
             margin: 80px auto 20px;
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #34495e; /* Dark gray */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f1c40f; /* Highlighted border */
         }
 
         h1 {
-            color: #ff4757;
+            font-family: 'Times New Roman', serif; /* Elegant serif font */
+            color: #f1c40f; /* Gold */
             text-align: center;
         }
 
@@ -76,7 +79,7 @@
         label {
             font-size: 14px;
             font-weight: bold;
-            color: #555;
+            color: #ecf0f1; /* Light text */
         }
 
         input[type="text"], 
@@ -92,8 +95,8 @@
         input[type="text"]:focus, 
         input[type="email"]:focus {
             outline: none;
-            border-color: #ff4757;
-            box-shadow: 0 0 4px rgba(255, 71, 87, 0.5);
+            border-color: #f1c40f; /* Gold */
+            box-shadow: 0 0 4px rgba(241, 196, 15, 0.5); /* Soft glowing effect */
         }
 
         input[type="file"] {
@@ -102,19 +105,20 @@
 
         button[type="submit"], 
         button[type="button"] {
-            background-color: #ff4757;
-            color: white;
+            background-color: #f1c40f; /* Gold */
+            color: #000; /* Black */
             font-size: 16px;
             font-weight: bold;
             padding: 10px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         button[type="submit"]:hover {
-            background-color: #e84141;
+            background-color: #27ae60; /* Neon green */
+            box-shadow: 0 0 8px rgba(39, 174, 96, 0.5); /* Soft glowing effect */
         }
 
         .profile-picture-preview {
@@ -126,8 +130,13 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            border: 2px solid #ff4757;
+            border: 2px solid #f1c40f; /* Gold */
             object-fit: cover;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .profile-picture-preview img:hover {
+            box-shadow: 0 0 8px rgba(241, 196, 15, 0.5); /* Soft glowing effect */
         }
 
         .success-message {
@@ -155,8 +164,8 @@
         /* Footer */
         footer {
             text-align: center;
-            background-color: #333;
-            color: white;
+            background-color: #000; /* Black */
+            color: #f1c40f; /* Gold */
             padding: 15px;
             margin-top: 20px;
         }
@@ -178,7 +187,7 @@
 
     <!-- back button -->
     <div style="margin: 20px;"></div>
-        <button type="button" onclick="window.history.back();" style="background-color: #ff4757; color: white; font-size: 16px; font-weight: bold; padding: 10px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease-in-out;">
+        <button type="button" onclick="window.history.back();" style="background-color: #f1c40f; color: #000; font-size: 16px; font-weight: bold; padding: 10px; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;">
             Back to Profile
         </button>
     </div>
@@ -187,11 +196,11 @@
     <section class="edit-profile-container">
         <h1>Edit Profile</h1>
 
-        <div class="profile-picture-preview">
+        <div class="profile-picture-preview"></div>
             <img id="profile-image" src="images/default_profile.png" alt="Profile Picture">
         </div>
 
-        <form id="edit-profile-form">
+        <form id="edit-profile-form"></form>
             <label for="full-name">Full Name:</label>
             <input type="text" id="full-name" value="" required>
         
